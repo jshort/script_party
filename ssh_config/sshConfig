@@ -1,0 +1,154 @@
+#!/usr/bin/env ruby
+
+VERSION_NUMBER = 0.1
+
+=begin
+  This code assumes you have your ssh config file in $HOME/.ssh/config with the following format:
+
+  # Comment describing stanza
+  Host <hostname alias>
+  Hostname <ip address>
+  User <username>
+  <other stuff like ProxyCommand or IdentityFile etc
+
+
+  TODO:
+  * cli menu
+  * configurable config file location
+  * config file for output mapping
+  * json output
+=end
+
+require 'optparse'
+
+def main
+  ######################################################################################
+  ###########################  Parse Input Data ########################################
+  ######################################################################################
+
+  ## Parse input or throw up help
+
+  #set defaults in initial hash and optparse will override if passed
+  options = {
+    :disp_json => false, 
+    :output_config => "~/.ssh/.ssh_config.yml",
+    :ssh_config_file => "~/.ssh/config"
+  }
+
+  op = OptionParser.new do |x|
+      x.banner = 'Usage: sshConfig [OPTIONS] [SSHCONFIGFILENAME]'
+      x.separator ''
+      x.separator 'Notes: '
+      x.separator '    This tool will display a nicely formatted output of a given users ~/.ssh/config file.  It allows for the user to '
+      x.separator '    specify ssh config files other than the default of ~/.ssh/config as well as use a configuration file to dicate the'
+      x.separator '    columns that are displays with a simple yaml file mapping.'
+      x.separator ''
+      
+      x.separator 'Options: '
+
+
+      x.on("--output-config=PATH", "The filesystem location for the output config file (default: ~/.ssh/.ssh_config.yml)") do |output_config|
+        if output_config[0] == '-'
+          raise OptionParser::MissingArgument
+        end
+        options[:output_config] = output_config
+      end
+
+      x.on("-j", "--json", "If this is set, then json is output instead of tabular form") do 
+        options[:disp_json] = true
+      end
+
+      x.on("-h", "--help", "Show this message") do 
+        puts op
+        exit 0
+      end
+
+      x.on("-v", "--version", "Show version") do 
+        puts "sshConfig version #{VERSION_NUMBER}"
+        exit 0
+      end
+  end
+
+  # do input validation and check leftovers for proper commands
+  begin
+    # parse options, parse! removes elements from ARGV so leftovers are positional arg(s)
+    op.parse!(ARGV)
+    options[:ssh_config_file] = ARGV[0] if ARGV[0]
+      
+  rescue OptionParser::InvalidOption, OptionParser::MissingArgument
+    puts "###############  #{$!.to_s}  ###############"
+    puts ""
+    puts op
+    exit 1
+  end
+
+  ## Start main script:
+
+  sshHosts = {}
+
+  File.open(File.expand_path(options[:ssh_config_file]), "r") do |file|
+    lineAr = file.readlines
+
+    lineAr.each_with_index do | line, index |
+      if line.start_with? "Host " 
+        next if /Host\s+(.*)/.match(line)[1] == "*"
+
+        scan_near_by_lines(lineAr, index, sshHosts)
+
+      end
+    end
+
+    # Output to Console
+    printf "%-26s%-49s%-15s%-s\n", "Host Alias", "IP Address", "User", "Comment"
+    printf "___________________________________________________________________________________________________________________\n"
+    sshHosts.each do |key, val|
+      printf "%-26s%-49s%-15s%-s\n", key, val[:ipAddr], val[:user], val[:comment]
+    end
+  end
+end
+
+
+def scan_near_by_lines(lineAr, index, hash_to_load)
+  startIndex = find_preceding_blank(lineAr, index)
+  endIndex = find_following_blank(lineAr, index)
+  comment = ipAddr = user = nil
+  (startIndex..endIndex).each do |ind|
+    comment = /#\s*(.*)/.match(lineAr[ind-1])[1] if lineAr[ind-1].start_with? "#"
+    ipAddr = /Hostname\s+(.*)/.match(lineAr[ind-1])[1] if lineAr[ind-1].start_with? "Hostname "
+    user = /User\s+(.*)/.match(lineAr[ind-1])[1] if lineAr[ind-1].start_with? "User"
+  end
+
+  hostAlias = /Host\s*(.*)/.match(lineAr[index])[1]
+  hash_to_load[hostAlias] = {comment: comment, ipAddr: ipAddr, user: user}
+end
+
+def find_preceding_blank(lineAr, index)
+  cur_line = lineAr[index]
+  retIndex = index
+  while cur_line !~ /^\s*$/
+    retIndex -= 1
+    cur_line = lineAr[retIndex]
+  end
+
+  # increment by 1 to start on first line after blank
+  retIndex+1
+end
+
+def find_following_blank(lineAr, index)
+  cur_line = lineAr[index]
+  retIndex = index
+
+  while retIndex != lineAr.length && cur_line !~ /^\s*$/
+    retIndex += 1
+    cur_line = lineAr[retIndex]
+  end
+  
+  retIndex
+end
+
+
+# Run main function
+main
+
+
+
