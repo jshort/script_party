@@ -1,7 +1,8 @@
 sshConfig
 ============
 
-== Usage
+Usage
+-----
 
 Simply move this excectuable to a location that is on the users PATH (or explicitly call it).  For info on how to use it, execute:
 
@@ -9,7 +10,8 @@ Simply move this excectuable to a location that is on the users PATH (or explici
 
 Make sure the file has executable permissions.
 
-== Requirements
+Requirements
+------------
 
 * Ruby 1.8.7+
 
