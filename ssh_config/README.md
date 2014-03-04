@@ -10,6 +10,13 @@ Simply move this excectuable to a location that is on the users PATH (or explici
 
 Make sure the file has executable permissions.
 
+Bash Completion
+---------------
+
+The included file "bash_completion" can be sourced in your .bashrc or .bash_profile files to included auto completion for ssh commands:
+
+  . bash_completion
+
 Requirements
 ------------
 
