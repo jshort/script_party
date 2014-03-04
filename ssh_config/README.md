@@ -6,16 +6,16 @@ Usage
 
 Simply move this excectuable to a location that is on the users PATH (or explicitly call it).  For info on how to use it, execute:
 
-  > sshConfig --help
+    > sshConfig --help
 
 Make sure the file has executable permissions.
 
 Bash Completion
 ---------------
 
-The included file "bash_completion.sh" can be sourced in your .bashrc or .bash_profile files to included auto completion for ssh commands:
+The included file `bash_completion.sh` can be sourced in your `.bashrc` or `.bash_profile` files to included auto completion for ssh commands:
 
-  . <path to>/bash_completion.sh
+    . <path to>/bash_completion.sh
 
 Requirements
 ------------
