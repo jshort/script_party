@@ -13,7 +13,7 @@ Make sure the file has executable permissions.
 Bash Completion
 ---------------
 
-The included file `bash_completion.sh` can be sourced in your `.bashrc` or `.bash_profile` files to included auto completion for ssh commands:
+The included file `bash_completion.sh` can be sourced in your `.bashrc` or `.bash_profile` files to includ auto completion for ssh commands:
 
     . <path to>/bash_completion.sh
 
