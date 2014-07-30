@@ -33,9 +33,17 @@ shift $(($OPTIND-1))
 
 fileRegex=${1:-".*\.java"}
 
-if [ -n "$dryRun" ]; then
-    for i in $(egrep -r -l "\x09" . | grep "$fileRegex"); do echo "$i"; done
-
+if grep --version | grep "GNU" > /dev/null ;
+then
+  cmdString=(grep -P)
 else
-    for i in $(egrep -r -l "\x09" . | grep "$fileRegex"); do expand -t 7 "$i" > /tmp/e && mv /tmp/e "$i"; done
+  cmdString=(egrep)
+fi
+
+arr=$("${cmdString[@]}" -r -l "\x09" . | grep "${fileRegex}")
+
+if [ -n "$dryRun" ]; then
+    for i in $arr; do echo "$i"; done
+else
+    for i in $arr; do expand -t 7 "$i" > /tmp/e && mv /tmp/e "$i"; done
 fi

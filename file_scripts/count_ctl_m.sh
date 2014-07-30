@@ -36,4 +36,11 @@ shift $(($OPTIND-1))
 dir=${1:-"."}
 fileRegex=${2:-'.*\.java\|.*\.xml\|.*\.properties\|.*\.sh\|.*\.pm\|.*\.MF\|.*\.pl'}
 
-egrep -r -l "\x0d$" $dir | grep "${fileRegex}"
+if  grep --version | grep "GNU" > /dev/null  ;
+then
+    cmdString=(grep -P)
+else
+    cmdString=(egrep --exclude=".git")
+fi
+
+"${cmdString[@]}" -r -l "\x0d" "$dir" | grep "${fileRegex}"
