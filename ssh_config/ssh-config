@@ -1,0 +1,147 @@
+#!/usr/bin/env ruby
+
+VERSION_NUMBER = 0.1
+
+=begin
+  This code assumes you have your ssh config file in $HOME/.ssh/config with the following format:
+
+  # Comment describing stanza
+  Host <hostname alias>
+  Hostname <ip address>
+  User <username>
+  <other stuff like ProxyCommand or IdentityFile etc
+
+
+  TODO:
+  * configurable config file location
+  * config file for output mapping
+  * json output
+=end
+
+require 'optparse'
+
+def main
+
+  options = parse_input
+
+  ssh_hosts = {}
+
+  File.open(File.expand_path(options[:ssh_config_file]), 'r') do |file|
+    line_arr = file.readlines
+
+    line_arr.each_with_index do |line, index|
+      # Typically users have Host/host in the first column, but it is not mandated
+      if line =~ /\s*host\b[=\s]+/i
+        next if /\s*host\b[=\s]+(.*)/i.match(line)[1] == '*'
+
+        scan_near_by_lines(line_arr, index, ssh_hosts)
+
+      end
+    end
+
+    # Output to stdout
+    printf "%-26s%-49s%-15s%-s\n", 'Host Alias', 'IP Address', 'User', 'Comment'
+    printf "___________________________________________________________________________________________________________________\n"
+    ssh_hosts.each do |key, val|
+      printf "%-26s%-49s%-15s%-s\n", key, val[:ip_addr], val[:user], val[:comment]
+    end
+  end
+end
+
+def parse_input
+  ######################################################################################
+  ###########################  Parse Input Data ########################################
+  ######################################################################################
+
+  ## Parse input or display help
+
+  # set defaults in initial hash and optparse will override if passed
+  options = {
+    :disp_json => false, 
+    :output_config => '~/.ssh/.ssh_config.yml',
+    :ssh_config_file => '~/.ssh/config'
+  }
+
+  op = OptionParser.new do |x|
+      x.banner =  "Usage: #{File.basename($0)} [OPTIONS] [SSHCONFIGFILENAME]"
+      x.separator ''
+      x.separator 'Notes: '
+      x.separator '    This tool will display a nicely formatted output of a given user\'s ~/.ssh/config file.  It allows for the user to '
+      x.separator '    specify ssh config files other than the default of ~/.ssh/config as well as use a configuration file to dictate the'
+      x.separator '    columns that are displays with a simple yaml file mapping.'
+      x.separator ''
+      
+      x.separator 'Options: '
+
+
+      x.on('--output-config PATH', 'The filesystem location for the output config file (default: ~/.ssh/.ssh_config.yml)') do |output_config|
+        options[:output_config] = output_config
+      end
+
+      x.on('-j', '--json', 'If this is set, then json is output instead of tabular form') do 
+        options[:disp_json] = true
+      end
+
+      x.on('-h', '--help', 'Show this message') do 
+        puts op
+        exit 0
+      end
+
+      x.on('-v', '--version', 'Show version') do 
+        puts "#{File.basename($0)} version #{VERSION_NUMBER}"
+        exit 0
+      end
+  end
+
+  # do input validation and check leftovers for proper commands
+  begin
+    # parse options, parse! removes elements from ARGV so leftovers are positional arg(s)
+    op.parse!(ARGV)
+    options[:ssh_config_file] = ARGV[0] if ARGV[0]
+      
+  rescue OptionParser::AmbiguousOption, 
+         OptionParser::InvalidOption, 
+         OptionParser::MissingArgument => e
+    puts "###############  #{e.message} ###############"
+    puts ''
+    puts op
+    exit 1
+  end
+  options
+end
+
+
+def scan_near_by_lines(line_arr, index, host_hash)
+  start_index = line_arr[index - 1] =~ /^#/ ? index - 1 : index
+  end_index = find_following_stanza(line_arr, index)
+  comment = ip_addr = user = nil
+  (start_index..end_index).each do |ind|
+    comment = /#\s*(.*)/.match(line_arr[ind])[1] if line_arr[ind] =~ /^#/
+    ip_addr = /\s*\bhostname\b[=\s]+(.*)/i.match(line_arr[ind])[1] if line_arr[ind] =~ /\s*\bhostname\b/i
+    user = /\s*\buser\b[=\s]+(.*)/i.match(line_arr[ind])[1] if line_arr[ind] =~ /\s*\buser\b/i
+  end
+
+  host_alias = /\s*host\b[=\s]+(.*)/i.match(line_arr[index])[1]
+  host_hash[host_alias] = {comment: comment, ip_addr: ip_addr, user: user}
+end
+
+# Either find an empty line or another Host/host key
+def find_following_stanza(line_arr, index)
+  # Start at next line since current is Host line
+  cur_line = line_arr[index + 1]
+  ret_index = index
+
+  while ret_index != line_arr.length && cur_line !~ /(^\s*$|\s*host\b[=\s]+)/i
+    ret_index += 1
+    cur_line = line_arr[ret_index]
+  end
+  
+  ret_index
+end
+
+
+# Run main function
+main
+
+
+
