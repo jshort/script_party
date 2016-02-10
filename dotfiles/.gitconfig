@@ -1,0 +1,19 @@
+[user]
+	email = james.short@alumni.duke.edu
+	name = James Short
+[color]
+	ui = auto
+[core]
+        pager = less -FMRiX
+        autocrlf = input
+[push]
+	default = simple
+[alias]
+        dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+        st = status
+        pr = pull --rebase
+        co = checkout
+        br = branch
+        pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
+[init]
+	templatedir = /Users/jwshort/.git_template_dir
