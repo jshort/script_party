@@ -1,0 +1,31 @@
+#!/bin/bash
+
+_ssh() {
+  local cur config_hosts
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+
+  config_hosts=$(ssh-config | tail -n+3 | cut -f 1 -d " ")
+
+  if [[ ! ${cur} == -* ]] ; then
+    COMPREPLY=( $(compgen -W "${config_hosts}" -- ${cur}) )
+    return 0
+  fi
+}
+
+complete -F _ssh ssh
+
+_vagrant() {
+    local cur v_cmds
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    v_cmds=$(vagrant list-commands | sed '/^$/,$!d; //d' | awk '{print $1}')
+
+    if [[ ! ${cur} == -* ]]; then
+        COMPREPLY=( $(compgen -W "${v_cmds}" -- ${cur}) )
+        return 0
+    fi
+}
+
+complete -F _vagrant vagrant
