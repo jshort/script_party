@@ -1,6 +1,6 @@
 #!/bin/bash
 
-###############COLOR CODE STARTS###############
+##### Color Codes #############################################################
 
 DULL=0
 BRIGHT=1
@@ -50,41 +50,72 @@ BRIGHT_WHITE="\[$ESC[${BRIGHT};${FG_WHITE}m\]"
 REV_CYAN="\[$ESC[${DULL};${BG_WHITE};${BG_CYAN}m\]"
 REV_RED="\[$ESC[${DULL};${FG_YELLOW}; ${BG_RED}m\]"
 
-###############COLOR CODE ENDS###############
+##### General Aliases #########################################################
 
-##### Various Aliases ###########################
+alias start_mongo='mongod --dbpath ~/mongodb/data/db'
+
+# clojure
 alias clj='java -cp /Users/jshort/clojure-1.5.1/clojure-1.5.1.jar clojure.main'
 alias nailgun='java -cp /Users/jshort/.vim/lib/server-2.3.0.jar:/Users/jshort/clojure-1.5.1/clojure-1.5.1.jar vimclojure.nailgun.NGServer'
-#alias webex='cd ~/Library/Application\ Support/WebEx\ Folder/1324; open Meeting\ Center.app/'
+
+# maven
 alias buildnt='mvn clean install -DskipTests'
-alias build='mvn clean install'
-alias run='mvn jetty:run'
+alias mci='mvn clean install'
+alias mc='mvn clean'
+alias mrun='mvn jetty:run'
 alias checkstyle='mvn checkstyle:checkstyle'
+
+# generic
 alias ls='ls -G'
 alias jj='java -jar'
 alias ssha='eval $(ssh-agent) && ssh-add'
 alias cdwp='cd ~/workplace2.0'
 alias md5sum='md5 -r'
+#alias webex='cd ~/Library/Application\ Support/WebEx\ Folder/1324; open Meeting\ Center.app/'
 
-####### PATH manipulation #####################
-export PATH=$PATH:/usr/local/sbin
+##### Vagrant Aliases #########################################################
+
+alias vst='vagrant status'
+alias vup='vagrant up'
+alias vssh='vagrant ssh'
+
+##### Go Aliases ##############################################################
+
+alias grun='go run'
+alias ginst='go install'
+
+##### Curl Aliases ############################################################
+
+alias curlkv='curl -k -v'
+
+###### PATH Manipulation ######################################################
+
 export PATH=/usr/local/bin:$PATH
-export PATH=/Users/jwshort/bin:$PATH
+export PATH="${HOME}/bin:$PATH"
 export PATH=/usr/local/Cellar/emacs/24.2/bin:$PATH
 
-####### PS1 Config ############################
+##### Homebrew Setup/Configuration ############################################
 
-export PS1="$BRIGHT_RED(\A) $CYAN\u$NORMAL@$YELLOW$(scutil --get ComputerName) $GREEN\W$BLUE\$(parse_git_branch)$NORMAL > "
+export PATH=$PATH:/usr/local/sbin
+
+##### Terminal Aesthetics Configuration #######################################
+
 export LSCOLORS=GxFxCxDxBxegedabagaced
+
+##### PS1 Prompt Configuration ################################################
 
 parse_git_branch() {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/'
 }
 
-##### Bash Completion #########################
+export PS1="$BRIGHT_RED(\A) $CYAN\u$NORMAL@$YELLOW$(scutil --get ComputerName) $GREEN\W$BLUE\$(parse_git_branch)$NORMAL > "
+
+##### Autocompletion Configuration ############################################
+
 . ~/.bash_completion
 
-##### Source other files ######################
+##### Source other files ######################################################
+
 if [ -d "${HOME}/.bash_profile.d" ]; then
     shopt -s nullglob; for f in "${HOME}/.bash_profile.d/"*; do
         echo "Sourcing $f"
@@ -92,5 +123,5 @@ if [ -d "${HOME}/.bash_profile.d" ]; then
     done
 fi
 
-##### Done ####################################
+##### Done ####################################################################
 echo ".bash_profile executed"
