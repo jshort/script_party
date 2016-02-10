@@ -31,8 +31,8 @@ def main
 
     line_arr.each_with_index do |line, index|
       # Typically users have Host/host in the first column, but it is not mandated
-      if line =~ /\s*host\b[=\s]+/i
-        next if /\s*host\b[=\s]+(.*)/i.match(line)[1] == '*'
+      if line =~ /^\s*host\b[=\s]+/i
+        next if /^\s*host\b[=\s]+(.*)/i.match(line)[1] == '*'
 
         scan_near_by_lines(line_arr, index, ssh_hosts)
 
