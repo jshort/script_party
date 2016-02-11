@@ -1,0 +1,3 @@
+#!/bin/bash
+
+~/bin/git-rec echo | grep -v "^$" | cut -d ' ' -f3

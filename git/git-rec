@@ -1,0 +1,103 @@
+#!/bin/bash
+
+getHelp() {
+    echo "usage: ${0##*/} [-h|--help|-v|--verbose|--ignore=<repo name>] [gitcmd]" >&2
+    exit 1
+}
+
+handle_git_dir() {
+    repo_name=$1
+    cmd=$2
+    def_ignore=$3
+
+    if [ ! -e ".git" ]; then
+        echo "Not a git repository: $repo_name"
+    elif [[ "$repo_name" =~ .*"$def_ignore".* ]]; then
+        :
+    elif [[ -n "$ignore_repo" && "$repo_name" = "$ignore_repo" ]]; then
+        :
+    elif ! git rev-parse --abbrev-ref HEAD | grep -q "mainline" || [ ! -z $(git rev-list @{u}.. | head -1) ] || ! git diff-index --quiet HEAD --; then
+        echo "######## Repository: $repo_name #######"
+        eval "$cmd"
+        echo ""
+    else
+        if [ -n "$verbose" ]; then
+            echo "######## Repository: $repo_name #######"
+            echo "No Changes"
+            eval "${cmd}"
+            echo ""
+        fi
+    fi
+}
+
+# Option parsing
+optspec=":hvd-:"
+while getopts "$optspec" optchar; do
+    case "${optchar}" in
+        -)
+            case "${OPTARG}" in
+                help)
+                    getHelp
+                    ;;
+                verbose)
+                    verbose=true
+                    ;;
+                ignore=*)
+                    ignore_repo=${OPTARG#*=}
+                    ;;
+                *)
+                    getHelp
+                    ;;
+            esac;;
+        v)
+            verbose=true
+            ;;
+        d)
+            debug=true
+            ;;
+        h)
+            getHelp
+            ;;
+        *)
+            getHelp
+            ;;
+    esac
+done
+
+shift $(($OPTIND-1))
+
+# Main logic
+script_dir="$(dirname "$0")"
+
+if [ -f "$script_dir/.git-rec-config" ]; then
+    . "$script_dir/.git-rec-config"
+fi
+
+# If sourced config file doesn't exist or contain a definition for DEFAULT_IGNORE,
+# then default to an arbitrary string
+: ${DEFAULT_IGNORE:='asdfasdfasdfasfdasdfasdfasd'}
+
+# If sourced file does not exist or does not define ROOT_DIR, default to current
+# directory
+: ${ROOT_DIR:='.'}
+
+cd "$ROOT_DIR"
+
+cmd="${@:-"git status"}"
+
+if [ -n "$debug" ]; then
+    echo "Command is \"$cmd\""
+    echo "Root directory is \"$ROOT_DIR\""
+fi
+
+if [ -e "$ROOT_DIR/.git" ]; then
+    repo_name=$(basename $(cd "$ROOT_DIR" && pwd))
+    handle_git_dir "$repo_name" "$cmd" "${DEFAULT_IGNORE}"
+else
+    IFS=$'\n' && for i in $(ls -1 -d -- */); do
+        repo_name="${i%%/}"
+        cd "$repo_name"
+        handle_git_dir "$repo_name" "$cmd" "${DEFAULT_IGNORE}"
+        cd ..;
+    done
+fi
