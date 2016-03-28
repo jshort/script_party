@@ -45,3 +45,6 @@ config.codekit
 # intellij #
 .idea/
 *.iml
+
+# build tools
+/build

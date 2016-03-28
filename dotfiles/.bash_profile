@@ -66,12 +66,49 @@ alias mrun='mvn jetty:run'
 alias checkstyle='mvn checkstyle:checkstyle'
 
 # generic
+alias ..='cd ..'
+alias ll='ls -la'
+alias l.='ls -d .* --color=auto'
 alias ls='ls -G'
 alias jj='java -jar'
 alias ssha='eval $(ssh-agent) && ssh-add'
 alias cdwp='cd ~/workplace2.0'
 alias md5sum='md5 -r'
-#alias webex='cd ~/Library/Application\ Support/WebEx\ Folder/1324; open Meeting\ Center.app/'
+alias sha1='openssl sha1'
+
+alias c='clear'
+alias path='echo -e ${PATH//:/\\n}'
+alias svi='sudo vi'
+alias vis='vim "+set si"'
+alias edit='vim'
+alias ports='netstat -tulanp'
+
+## pass options to free ##
+alias meminfo='free -m -l -t'
+
+## get top process eating memory
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+
+## get top process eating cpu ##
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+
+## Get server cpu info ##
+alias cpuinfo='lscpu'
+## older system use /proc/cpuinfo ##
+##alias cpuinfo='less /proc/cpuinfo' ##
+
+## get GPU ram on desktop / laptop##
+alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+
+alias ipt='sudo /sbin/iptables'
+alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
+alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
+alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
+alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
+alias firewall=iptlist
+
 
 ##### Vagrant Aliases #########################################################
 
