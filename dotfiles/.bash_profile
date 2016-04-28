@@ -62,19 +62,21 @@ alias nailgun='java -cp /Users/jshort/.vim/lib/server-2.3.0.jar:/Users/jshort/cl
 alias buildnt='mvn clean install -DskipTests'
 alias mci='mvn clean install'
 alias mc='mvn clean'
-alias mrun='mvn jetty:run'
+alias mrun='mvn jettyd:run'
 alias checkstyle='mvn checkstyle:checkstyle'
 
 # generic
 alias ..='cd ..'
 alias ll='ls -la'
-alias l.='ls -d .* --color=auto'
+alias l.='ls -d .* -G'
 alias ls='ls -G'
 alias jj='java -jar'
 alias ssha='eval $(ssh-agent) && ssh-add'
 alias cdwp='cd ~/workplace2.0'
 alias md5sum='md5 -r'
 alias sha1='openssl sha1'
+
+alias viewimage='open -a Preview'
 
 alias c='clear'
 alias path='echo -e ${PATH//:/\\n}'
@@ -109,6 +111,7 @@ alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
 alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
 alias firewall=iptlist
 
+alias netstat-tunlp='sudo lsof -i -n -P | grep TCP'
 
 ##### Vagrant Aliases #########################################################
 
