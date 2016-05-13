@@ -19,5 +19,8 @@
         lg = log -p
         logf = log --format=fuller
         pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
+        dw = diff --ws-error-highlight=all
 [init]
         templatedir = /Users/jwshort/.git_template_dir
+[color "diff"]
+	whitespace = red reverse

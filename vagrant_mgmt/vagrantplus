@@ -26,8 +26,14 @@ run_generic() {
 main() {
     CMD=${1:-'status'}
     VAGRANT_ROOT=${2:-"${HOME}/vagrant"}
+
+    if [ ! -d "${VAGRANT_ROOT}" ]; then
+        echo "${VAGRANT_ROOT} does not exist"
+        exit 1
+    fi
+
     cd ${VAGRANT_ROOT}
-    
+
     for dir in $(ls -1 ${VAGRANT_ROOT}); do
         pushd ${dir} > /dev/null
         echo "${dir} :"
