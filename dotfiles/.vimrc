@@ -2,6 +2,9 @@ set number
 highlight LineNr ctermfg=green
 set wrap
 set ruler
+set incsearch
+set hlsearch
+hi Search ctermbg=Blue
 
 syntax on
 filetype plugin on
@@ -16,6 +19,10 @@ set expandtab
 set ai "Auto indent
 set si "Smart indent
 set pastetoggle=<F2>
+
+" Key mappings
+inoremap jj <ESC>
+let mapleader = "\<Space>"
 
 " Cross hairs
 set cursorline
@@ -41,7 +48,6 @@ autocmd FileType go setlocal sw=8 sts=8 expandtab
 
 au BufRead,BufNewFile *.go setfiletype go
 
-
 nnoremap <leader>h :call HighlightToggle()<cr>
 let g:should_highlight = 1
 function! HighlightToggle()
@@ -55,3 +61,7 @@ function! HighlightToggle()
       let g:should_highlight = 1
     endif
 endfunction
+
+" Macros
+let @a='ddp'
+let @b=':s/cursor/blah/'
