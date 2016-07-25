@@ -163,5 +163,12 @@ if [ -d "${HOME}/.bash_profile.d" ]; then
     done
 fi
 
+##### Setup Speedtest Tool ####################################################
+
+if [ ! -e "${HOME}/bin/speedtest-cli" ]; then
+    curl -sLo ${HOME}/bin/speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest_cli.py
+    chmod +x ${HOME}/bin/speedtest-cli
+fi
+
 ##### Done ####################################################################
 echo ".bash_profile executed"
