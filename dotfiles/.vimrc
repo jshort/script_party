@@ -25,8 +25,9 @@ set pastetoggle=<F2>
 " Key (re)mappings
 inoremap jj <ESC>
 let mapleader = "\<Space>"
-map <leader>l :noh<cr>:<backspace>
-nnoremap <leader>h :call HighlightToggle()<cr>:<backspace>
+map <silent> <leader>l :noh<cr>
+nnoremap <silent> <leader>h :call HighlightToggle()<cr>
+" vnoremap <ESC> <C-c>
 
 " Cross hairs
 set cursorline
@@ -44,6 +45,10 @@ autocmd FileType sh     setlocal sw=4 sts=4 expandtab
 autocmd FileType ruby   setlocal sw=2 sts=2 expandtab
 autocmd FileType go     setlocal sw=8 sts=8 expandtab
 autocmd FileType java   setlocal sw=4 sts=4 expandtab
+
+" Variables
+let g:netrw_liststyle=3
+set timeoutlen=1000 ttimeoutlen=0
 
 " Functions
 func! DeleteTrailingWS()

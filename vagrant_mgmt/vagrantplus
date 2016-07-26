@@ -5,42 +5,42 @@ set -e
 indent4() { sed 's/^/    /'; }
 
 execute_cmd() {
-    local _cmd=$1
-    local _dir=$2
+  local _cmd=$1
+  local _dir=$2
 
-    if [ "${_cmd}" = 'status' ]; then
-        run_status
-    else
-        run_generic "${_cmd}"
-    fi
+  if [ "${_cmd}" = 'status' ]; then
+    run_status
+  else
+    run_generic "${_cmd}"
+  fi
 }
 
 run_status() {
-    vagrant status | sed '/^$/,/^$/ !d; //d' | indent4
+  vagrant status | sed '/^$/,/^$/ !d; //d' | indent4
 }
 
 run_generic() {
-    eval "vagrant $1" | indent4
+  eval "vagrant $1" | indent4
 }
 
 main() {
-    CMD=${1:-'status'}
-    VAGRANT_ROOT=${2:-"${HOME}/vagrant"}
+  CMD=${1:-'status'}
+  VAGRANT_ROOT=${2:-"${HOME}/vagrant"}
 
-    if [ ! -d "${VAGRANT_ROOT}" ]; then
-        echo "${VAGRANT_ROOT} does not exist"
-        exit 1
-    fi
+  if [ ! -d "${VAGRANT_ROOT}" ]; then
+    echo "${VAGRANT_ROOT} does not exist"
+    exit 1
+  fi
 
-    cd ${VAGRANT_ROOT}
+  cd ${VAGRANT_ROOT}
 
-    for dir in $(ls -1 ${VAGRANT_ROOT}); do
-        pushd ${dir} > /dev/null
-        echo "${dir} :"
-        execute_cmd "${CMD}" ${dir}
-        echo ""
-        popd > /dev/null
-    done
+  for dir in $(ls -1 ${VAGRANT_ROOT}); do
+    pushd ${dir} > /dev/null
+    echo "${dir} :"
+    execute_cmd "${CMD}" ${dir}
+    echo ""
+    popd > /dev/null
+  done
 }
 
 main "$@"

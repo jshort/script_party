@@ -6,29 +6,29 @@
 #   $2 - file regex pattern (defaults to .java,.xml,.properties,.sh,.pm,.pl,.MF)
 
 getHelp() {
-    echo "usage: $0 [-h|--help] [dir] [fileRegex]" >&2
-    exit 1
+  echo "usage: $0 [-h|--help] [dir] [fileRegex]" >&2
+  exit 1
 }
 
 optspec=":h-:"
 while getopts "$optspec" optchar; do
-    case "${optchar}" in
-        -)
-            case "${OPTARG}" in
-                help)
-                    getHelp
-                    ;;
-                *)
-                    getHelp
-                    ;;
-            esac;;
-        h)
-            getHelp
-            ;;
+  case "${optchar}" in
+    -)
+      case "${OPTARG}" in
+        help)
+          getHelp
+          ;;
         *)
-            getHelp
-            ;;
-    esac
+          getHelp
+          ;;
+      esac;;
+    h)
+      getHelp
+      ;;
+    *)
+      getHelp
+      ;;
+  esac
 done
 
 shift $(($OPTIND-1))
@@ -36,11 +36,10 @@ shift $(($OPTIND-1))
 dir=${1:-"."}
 fileRegex=${2:-'.*\.java\|.*\.xml\|.*\.properties\|.*\.sh\|.*\.pm\|.*\.MF\|.*\.pl'}
 
-if  grep --version | grep "GNU" > /dev/null  ;
-then
-    cmdString=(grep -P)
+if  grep --version | grep "GNU" > /dev/null; then
+  cmdString=(grep -P)
 else
-    cmdString=(egrep --exclude=".git")
+  cmdString=(egrep --exclude=".git")
 fi
 
 "${cmdString[@]}" -r -l "\x0d" "$dir" | grep "${fileRegex}"

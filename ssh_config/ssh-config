@@ -21,7 +21,6 @@ VERSION_NUMBER = 0.1
 require 'optparse'
 
 def main
-
   options = parse_input
 
   ssh_hosts = {}
@@ -33,17 +32,15 @@ def main
       # Typically users have Host/host in the first column, but it is not mandated
       if line =~ /^\s*host\b[=\s]+/i
         next if /^\s*host\b[=\s]+(.*)/i.match(line)[1] == '*'
-
         scan_near_by_lines(line_arr, index, ssh_hosts)
-
       end
     end
 
     # Output to stdout
-    printf "%-26s%-49s%-15s%-s\n", 'Host Alias', 'IP Address', 'User', 'Comment'
+    printf "%-22s%-52s%-15s%-s\n", 'Host Alias', 'IP Address', 'User', 'Comment'
     printf "___________________________________________________________________________________________________________________\n"
     ssh_hosts.each do |key, val|
-      printf "%-26s%-49s%-15s%-s\n", key, val[:ip_addr], val[:user], val[:comment]
+      printf "%-22s%-52s%-15s%-s\n", key, val[:ip_addr], val[:user], val[:comment]
     end
   end
 end
@@ -57,7 +54,7 @@ def parse_input
 
   # set defaults in initial hash and optparse will override if passed
   options = {
-    :disp_json => false, 
+    :disp_json => false,
     :output_config => '~/.ssh/.ssh_config.yml',
     :ssh_config_file => '~/.ssh/config'
   }
@@ -70,24 +67,23 @@ def parse_input
       x.separator '    specify ssh config files other than the default of ~/.ssh/config as well as use a configuration file to dictate the'
       x.separator '    columns that are displays with a simple yaml file mapping.'
       x.separator ''
-      
-      x.separator 'Options: '
 
+      x.separator 'Options: '
 
       x.on('--output-config PATH', 'The filesystem location for the output config file (default: ~/.ssh/.ssh_config.yml)') do |output_config|
         options[:output_config] = output_config
       end
 
-      x.on('-j', '--json', 'If this is set, then json is output instead of tabular form') do 
+      x.on('-j', '--json', 'If this is set, then json is output instead of tabular form') do
         options[:disp_json] = true
       end
 
-      x.on('-h', '--help', 'Show this message') do 
+      x.on('-h', '--help', 'Show this message') do
         puts op
         exit 0
       end
 
-      x.on('-v', '--version', 'Show version') do 
+      x.on('-v', '--version', 'Show version') do
         puts "#{File.basename($0)} version #{VERSION_NUMBER}"
         exit 0
       end
@@ -98,9 +94,9 @@ def parse_input
     # parse options, parse! removes elements from ARGV so leftovers are positional arg(s)
     op.parse!(ARGV)
     options[:ssh_config_file] = ARGV[0] if ARGV[0]
-      
-  rescue OptionParser::AmbiguousOption, 
-         OptionParser::InvalidOption, 
+
+  rescue OptionParser::AmbiguousOption,
+         OptionParser::InvalidOption,
          OptionParser::MissingArgument => e
     puts "###############  #{e.message} ###############"
     puts ''
@@ -109,7 +105,6 @@ def parse_input
   end
   options
 end
-
 
 def scan_near_by_lines(line_arr, index, host_hash)
   start_index = line_arr[index - 1] =~ /^#/ ? index - 1 : index
@@ -135,7 +130,7 @@ def find_following_stanza(line_arr, index)
     ret_index += 1
     cur_line = line_arr[ret_index]
   end
-  
+
   ret_index
 end
 
