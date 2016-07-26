@@ -7,9 +7,11 @@
         pager = less -FMRiX
         autocrlf = input
         excludesfile = ~/.gitignore
+        editor = vim
 [push]
         default = simple
 [alias]
+        ca = commit --amend
         dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
         st = status
         pr = pull --rebase
@@ -23,4 +25,4 @@
 [init]
         templatedir = /Users/jwshort/.git_template_dir
 [color "diff"]
-	whitespace = red reverse
+        whitespace = red reverse
