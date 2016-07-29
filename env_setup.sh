@@ -1,5 +1,12 @@
 #!/bin/bash
 
+##### Notes #####
+# Map at the system level Caps Lock to Control
+# Powerline/iTerm2 setup: https://coderwall.com/p/yiot4q/setup-vim-powerline-and-iterm2-on-mac-os-x
+# Use brew pip (from Vim install):  pip install --user powerline-status (might not be necessary)
+# Fonts: git clone https://github.com/powerline/fonts.git && cd fonts && ./install.sh
+# Set iTerm2 font (non-ASCII too) to be: Inconsolata for powerline 14pt
+
 DIR=$(cd $(/usr/bin/dirname $0) 2>/dev/null && pwd)
 
 DOTFILES=(
@@ -31,6 +38,16 @@ VAGRANT_SCRIPTS=(
 SSH_SCRIPTS=(
   ssh-config
 )
+
+indent4() { sed 's/^/    /'; }
+
+setup_powerline_fonts() {
+  tmpdir=$(mktemp -d /tmp/env_setup.XXXXXX)
+  pushd $tmpdir > /dev/null
+  git clone -q https://github.com/powerline/fonts.git && cd fonts && ./install.sh | indent4
+  popd > /dev/null
+  rm -rf "$tmpdir"
+}
 
 setup_vim_plugin() {
   plugin_name=$1
@@ -71,11 +88,15 @@ main() {
   else
     echo "    Pathogen for VIM already exists, skipping..."
   fi
+  # Powerline fonts
+  echo "Setting up Powerline fonts:"
+  setup_powerline_fonts
 
   # Plugins
   echo "Setting up VIM plugins:"
   cd ${HOME}/.vim/bundle
   setup_vim_plugin delimitMate https://github.com/Raimondi/delimitMate.git
+  setup_vim_plugin vim-airline https://github.com/vim-airline/vim-airline
   cd ${DIR}
 
   #### Setup Script/RC symlinks ####

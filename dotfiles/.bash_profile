@@ -68,7 +68,7 @@ alias checkstyle='mvn checkstyle:checkstyle'
 # generic
 alias ..='cd ..'
 alias ll='ls -la'
-alias l.='ls -d .* -G'
+alias l.='ls -G -d .*'
 alias ls='ls -G'
 alias jj='java -jar'
 alias ssha='eval $(ssh-agent) && ssh-add'
@@ -132,7 +132,6 @@ alias curlkv='curl -k -v'
 
 export PATH=/usr/local/bin:$PATH
 export PATH="${HOME}/bin:$PATH"
-export PATH=/usr/local/Cellar/emacs/24.2/bin:$PATH
 
 ##### Homebrew Setup/Configuration ############################################
 
