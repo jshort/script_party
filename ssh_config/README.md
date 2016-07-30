@@ -1,17 +1,14 @@
-sshConfig
-============
+# ssh-config
 
-Usage
------
+## Usage
 
 Simply move this excectuable to a location that is on the users PATH (or explicitly call it).  For info on how to use it, execute:
 
-    > sshConfig --help
+    > ssh-config --help
 
 Make sure the file has executable permissions.
 
-Bash Completion
----------------
+# Bash Completion
 
 The included file `bash_completion.sh` can be sourced in your `.bashrc` or `.bash_profile` files to include auto completion for ssh commands:
 

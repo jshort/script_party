@@ -147,7 +147,15 @@ parse_git_branch() {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/'
 }
 
-export PS1="$BRIGHT_RED(\A) $CYAN\u$NORMAL@$YELLOW$(scutil --get ComputerName) $GREEN\W$BLUE\$(parse_git_branch)$NORMAL > "
+if [[ `uname` == 'Darwin' ]]; then
+  # MacOS
+  hostname=$(scutil --get ComputerName)
+else
+  # Linux
+  hostname=$(hostname)
+fi
+
+export PS1="$BRIGHT_RED(\A) $CYAN\u$NORMAL@$YELLOW${hostname} $GREEN\W$BLUE\$(parse_git_branch)$NORMAL > "
 
 ##### Autocompletion Configuration ############################################
 
