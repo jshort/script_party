@@ -50,6 +50,18 @@ BRIGHT_WHITE="\[$ESC[${BRIGHT};${FG_WHITE}m\]"
 REV_CYAN="\[$ESC[${DULL};${BG_WHITE};${BG_CYAN}m\]"
 REV_RED="\[$ESC[${DULL};${FG_YELLOW}; ${BG_RED}m\]"
 
+##### OS Specific Logic #######################################################
+
+if [[ $(uname) == 'Darwin' ]]; then
+  # MacOS
+  hostname=$(scutil --get ComputerName)
+  alias ls='ls -G'
+else
+  # Linux
+  hostname=$(hostname)
+  alias ls='ls --color=auto'
+fi
+
 ##### General Aliases #########################################################
 
 alias start_mongo='mongod --dbpath ~/mongodb/data/db'
@@ -68,8 +80,7 @@ alias checkstyle='mvn checkstyle:checkstyle'
 # generic
 alias ..='cd ..'
 alias ll='ls -la'
-alias l.='ls -G -d .*'
-alias ls='ls -G'
+alias l.='ls -d .*'
 alias jj='java -jar'
 alias ssha='eval $(ssh-agent) && ssh-add'
 alias cdwp='cd ~/workplace2.0'
@@ -147,13 +158,6 @@ parse_git_branch() {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/'
 }
 
-if [[ `uname` == 'Darwin' ]]; then
-  # MacOS
-  hostname=$(scutil --get ComputerName)
-else
-  # Linux
-  hostname=$(hostname)
-fi
 
 export PS1="$BRIGHT_RED(\A) $CYAN\u$NORMAL@$YELLOW${hostname} $GREEN\W$BLUE\$(parse_git_branch)$NORMAL > "
 
@@ -163,18 +167,18 @@ export PS1="$BRIGHT_RED(\A) $CYAN\u$NORMAL@$YELLOW${hostname} $GREEN\W$BLUE\$(pa
 
 ##### Source other files ######################################################
 
-if [ -d "${HOME}/.bash_profile.d" ]; then
-    shopt -s nullglob; for f in "${HOME}/.bash_profile.d/"*; do
-        echo "Sourcing $f"
-        . "$f"
-    done
+if [ -d "${HOME}/.bash_profile.d" ] && [ $(ls -A "${HOME}/.bash_profile.d/") ]; then
+  for f in "${HOME}/.bash_profile.d/"*; do
+    echo "Sourcing $f"
+    . "$f"
+  done
 fi
 
 ##### Setup Speedtest Tool ####################################################
 
 if [ ! -e "${HOME}/bin/speedtest-cli" ]; then
-    curl -sLo ${HOME}/bin/speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest_cli.py
-    chmod +x ${HOME}/bin/speedtest-cli
+  curl -sLo ${HOME}/bin/speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest_cli.py
+  chmod +x ${HOME}/bin/speedtest-cli
 fi
 
 ##### Done ####################################################################
