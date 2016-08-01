@@ -167,7 +167,7 @@ export PS1="$BRIGHT_RED(\A) $CYAN\u$NORMAL@$YELLOW${hostname} $GREEN\W$BLUE\$(pa
 
 ##### Source other files ######################################################
 
-if [ -d "${HOME}/.bash_profile.d" ] && [ $(ls -A "${HOME}/.bash_profile.d/") ]; then
+if [ -d "${HOME}/.bash_profile.d" ] && [ "$(ls -A "${HOME}/.bash_profile.d/")" ]; then
   for f in "${HOME}/.bash_profile.d/"*; do
     echo "Sourcing $f"
     . "$f"

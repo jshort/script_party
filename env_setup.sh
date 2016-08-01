@@ -67,6 +67,11 @@ symlink_dirs() {
 
   for i in "${file_arr[@]}"; do
     target="$target_dir/$i"
+    if [ ! -d "$(/usr/bin/dirname $target)" ]; then
+      echo "    Base dir for $target does not exist, creating it..."
+      mkdir -p $(/usr/bin/dirname $target)
+    fi
+
     if [ -L "$target" ]; then
       echo "    $target is already symlinked."
     elif [ -e "$target" ]; then
@@ -81,7 +86,7 @@ symlink_dirs() {
 main() {
   ##### Setup VIM ####
   echo "Setting up Pathogen for VIM:"
-  mkdir -p ${HOME}/.vim/autoload ${HOME}/.vim/bundle
+  mkdir -p ${HOME}/.vim/autoload ${HOME}/.vim/bundle ${HOME}/.vim/syntax
   if [ ! -e "${HOME}/.vim/autoload/pathogen.vim" ]; then
     echo "    Pulling down Pathogen for VIM."
     curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
@@ -101,6 +106,7 @@ main() {
 
   #### Setup Script/RC symlinks ####
   echo "Symlinking scripts and dotfiles:"
+  mkdir -p $HOME/bin
   symlink_dirs "$DIR/dotfiles" $HOME DOTFILES[@]
   symlink_dirs "$DIR/file_scripts" "$HOME/bin" FILE_SCRIPTS[@]
   symlink_dirs "$DIR/ssh_config" "$HOME/bin" SSH_SCRIPTS[@]
