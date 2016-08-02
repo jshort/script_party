@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Creates a lot of disk destroyer processes to create CPU load on the host it
+# runs on.  Hitting return kills the dd processes.
+
+fulload() {
+  dd if=/dev/zero of=/dev/null | \
+  dd if=/dev/zero of=/dev/null | \
+  dd if=/dev/zero of=/dev/null | \
+  dd if=/dev/zero of=/dev/null | \
+  dd if=/dev/zero of=/dev/null | \
+  dd if=/dev/zero of=/dev/null | \
+  dd if=/dev/zero of=/dev/null | \
+  dd if=/dev/zero of=/dev/null | \
+  dd if=/dev/zero of=/dev/null | \
+  dd if=/dev/zero of=/dev/null | \
+  dd if=/dev/zero of=/dev/null | \
+  dd if=/dev/zero of=/dev/null &
+}
+
+fulload
+
+echo "Hit enter to stop load"
+read
+
+killall dd

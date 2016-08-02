@@ -55,11 +55,15 @@ REV_RED="\[$ESC[${DULL};${FG_YELLOW}; ${BG_RED}m\]"
 if [[ $(uname) == 'Darwin' ]]; then
   # MacOS
   hostname=$(scutil --get ComputerName)
-  alias ls='ls -G'
+  export LSCOLORS=GxFxCxDxBxegedabagaced
+  alias ls='ls -GpF'
+  alias ps='ps -ej'
 else
   # Linux
   hostname=$(hostname)
-  alias ls='ls --color=auto'
+  export LS_COLORS="rs=0:di=01;36:ln=01;35:mh=00:pi=40;33:so=01;32:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;31:"
+  alias ls='ls -pF --color=auto'
+  alias ps='ps -ef'
 fi
 
 ##### General Aliases #########################################################
@@ -100,12 +104,10 @@ alias ports='netstat -tulanp'
 alias meminfo='free -m -l -t'
 
 ## get top process eating memory
-alias psmem='ps auxf | sort -nr -k 4'
-alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+alias psmem='\ps -e -o pid,%cpu,%mem,command | tail -n +2 | sort -nr -k 3 | head -10'
 
 ## get top process eating cpu ##
-alias pscpu='ps auxf | sort -nr -k 3'
-alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+alias pscpu='\ps -e -o pid,%cpu,%mem,command | tail -n +2 | sort -nr -k 2 | head -10'
 
 ## Get server cpu info ##
 alias cpuinfo='lscpu'
@@ -148,16 +150,11 @@ export PATH="${HOME}/bin:$PATH"
 
 export PATH=$PATH:/usr/local/sbin
 
-##### Terminal Aesthetics Configuration #######################################
-
-export LSCOLORS=GxFxCxDxBxegedabagaced
-
 ##### PS1 Prompt Configuration ################################################
 
 parse_git_branch() {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/'
 }
-
 
 export PS1="$BRIGHT_RED(\A) $CYAN\u$NORMAL@$YELLOW${hostname} $GREEN\W$BLUE\$(parse_git_branch)$NORMAL > "
 
@@ -167,7 +164,7 @@ export PS1="$BRIGHT_RED(\A) $CYAN\u$NORMAL@$YELLOW${hostname} $GREEN\W$BLUE\$(pa
 
 ##### Source other files ######################################################
 
-if [ -d "${HOME}/.bash_profile.d" ] && [ "$(ls -A "${HOME}/.bash_profile.d/")" ]; then
+if [ -d "${HOME}/.bash_profile.d" ] && [ -n "$(ls -A "${HOME}/.bash_profile.d/")" ]; then
   for f in "${HOME}/.bash_profile.d/"*; do
     echo "Sourcing $f"
     . "$f"
@@ -180,6 +177,16 @@ if [ ! -e "${HOME}/bin/speedtest-cli" ]; then
   curl -sLo ${HOME}/bin/speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest_cli.py
   chmod +x ${HOME}/bin/speedtest-cli
 fi
+
+##### Bash Functions ##########################################################
+
+psproc() {
+  if [ -n "$1" ]; then
+    \ps -e -o pid,etime,command | grep "$1"
+  else
+    \ps -e -o pid,etime,command
+  fi
+}
 
 ##### Done ####################################################################
 echo ".bash_profile executed"

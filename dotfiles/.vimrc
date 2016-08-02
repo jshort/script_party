@@ -1,6 +1,8 @@
 " ##### Pathogen #####
 execute pathogen#infect()
 
+colo peachpuff
+
 " ##### Configuration/Variables #####
 " vim-airline config (always show status and tabline)
 set laststatus=2
@@ -26,8 +28,8 @@ set ruler
 set incsearch
 set hlsearch
 " Search and line number highlighting colors
-hi Search ctermbg=Blue
-hi LineNr ctermfg=green
+autocmd ColorScheme * hi Search ctermbg=Blue
+autocmd ColorScheme * hi LineNr ctermfg=green
 
 
 " ##### Syntax highlighting #####
