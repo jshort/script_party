@@ -2,4 +2,8 @@
 
 SCREEN_ID="$1"
 
-screen -ls | tail -n +2 | head -n -2 | awk '{print $1}' | grep "$SCREEN_ID"
+if screen -ls > /dev/null; then
+  screen -ls | tail -n +2 | head -n -2 | awk '{print $1}' | grep "$SCREEN_ID"
+else
+  echo "No screen sessions available."
+fi

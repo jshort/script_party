@@ -16,6 +16,7 @@ DOTFILES=(
   .gitignore
   .vim/syntax/go.vim
   .vimrc
+  .bash_profile.d/rbenv
 )
 
 FILE_SCRIPTS=(
