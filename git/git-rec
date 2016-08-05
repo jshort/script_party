@@ -1,8 +1,18 @@
 #!/bin/bash
 
+DEFAULT_MAIN_BRANCH_NAME='master'
+
 getHelp() {
   echo "usage: ${0##*/} [-h|--help|-v|--verbose|--ignore=<repo name>] [gitcmd]" >&2
   exit 1
+}
+
+is_repo_dirty() {
+  # git diff-index --quiet HEAD --
+  if [ -n "$(git status --porcelain)" ]; then
+    return 0
+  fi
+  return 1
 }
 
 handle_git_dir() {
@@ -16,7 +26,9 @@ handle_git_dir() {
     :
   elif [[ -n "$ignore_repo" && "$repo_name" = "$ignore_repo" ]]; then
     :
-  elif ! git rev-parse --abbrev-ref HEAD | grep -q "mainline" || [ ! -z $(git rev-list @{u}.. | head -1) ] || ! git diff-index --quiet HEAD --; then
+  # Print command if not on main branch, there are unpushed commits, or there
+  # are untracked/modified files
+  elif ! (git rev-parse --abbrev-ref HEAD | grep -q "$MAIN_BRANCH_NAME") || [ -n "$(git rev-list @{u}.. | head -1)" ] || is_repo_dirty; then
     echo "######## Repository: $repo_name #######"
     eval "$cmd"
     echo ""
@@ -76,6 +88,9 @@ fi
 # If sourced config file doesn't exist or contain a definition for DEFAULT_IGNORE,
 # then default to an arbitrary string
 : ${DEFAULT_IGNORE:='asdfasdfasdfasfdasdfasdfasd'}
+
+# If sourced config does not define a main branch name, default to 'master'
+: ${MAIN_BRANCH_NAME:="$DEFAULT_MAIN_BRANCH_NAME"}
 
 # If sourced file does not exist or does not define ROOT_DIR, default to current
 # directory

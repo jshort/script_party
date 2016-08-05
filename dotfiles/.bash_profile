@@ -58,6 +58,9 @@ if [[ $(uname) == 'Darwin' ]]; then
   export LSCOLORS=GxFxCxDxBxegedabagaced
   alias ls='ls -GpF'
   alias ps='ps -ej'
+  if [ -e '/usr/local/bin/gsed' ]; then
+    alias sed='/usr/local/bin/gsed'
+  fi
 else
   # Linux
   hostname=$(hostname)

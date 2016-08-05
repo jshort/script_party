@@ -42,12 +42,17 @@ SSH_SCRIPTS=(
 
 indent4() { sed 's/^/    /'; }
 
+cleanup_dir() {
+  dir="$1"
+  rm -rf "$dir"
+}
+
 setup_powerline_fonts() {
-  tmpdir=$(mktemp -d /tmp/env_setup.XXXXXX)
-  pushd $tmpdir > /dev/null
+  tmp_dir=$(mktemp -d /tmp/env_setup.XXXXXX)
+  pushd $tmp_dir > /dev/null
   git clone -q https://github.com/powerline/fonts.git && cd fonts && ./install.sh | indent4
   popd > /dev/null
-  rm -rf "$tmpdir"
+  trap "cleanup_dir ${tmp_dir}" EXIT
 }
 
 setup_vim_plugin() {
