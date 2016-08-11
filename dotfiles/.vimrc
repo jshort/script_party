@@ -1,6 +1,7 @@
 " ##### Pathogen #####
 execute pathogen#infect()
 
+" Colorscheme
 colo peachpuff
 
 " ##### Configuration/Variables #####
@@ -15,7 +16,11 @@ let g:netrw_liststyle=3
 set timeoutlen=1000 ttimeoutlen=0
 " delimitMate <Space> expansion
 let delimitMate_expand_space = 1
-
+" ctrlp settings
+let g:ctrlp_show_hidden = 1
+" grep config
+let &grepprg = 'grep -n -R --exclude-dir={target,build,.git,.svn}'
+command! -nargs=+ Grep execute 'silent grep! <args>' | copen
 
 " ##### Common Settings #####
 " Turn on line numbers, word wrap, and ruler
@@ -24,6 +29,7 @@ set noshowmode
 set number
 set wrap
 set ruler
+set scrolloff=2
 " Turn on search highlighting (in progress and complete)
 set incsearch
 set hlsearch

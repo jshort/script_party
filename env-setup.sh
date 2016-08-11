@@ -17,6 +17,7 @@ DOTFILES=(
   .vim/syntax/go.vim
   .vimrc
   .bash_profile.d/rbenv
+  .bash_profile.d/ssh-agent-config
 )
 
 FILE_SCRIPTS=(
@@ -56,11 +57,11 @@ setup_powerline_fonts() {
 }
 
 setup_vim_plugin() {
-  plugin_name=$1
-  plugin_git_url=$2
+  plugin_git_url=$1
+  plugin_name="$(basename $plugin_git_url .git)"
   if [ ! -d "$plugin_name" ]; then
     echo "    Setting up plugin: $plugin_name"
-    git clone $plugin_git_url
+    git clone $plugin_git_url | indent4
   else
     echo "    Plugin $plugin_name already exists, skipping..."
   fi
@@ -100,14 +101,19 @@ main() {
     echo "    Pathogen for VIM already exists, skipping..."
   fi
   # Powerline fonts
-  echo "Setting up Powerline fonts:"
-  setup_powerline_fonts
+  if [ "$1" != "--no-fonts" ]; then
+    echo "Setting up Powerline fonts:"
+    setup_powerline_fonts
+  fi
 
   # Plugins
   echo "Setting up VIM plugins:"
   cd ${HOME}/.vim/bundle
-  setup_vim_plugin delimitMate https://github.com/Raimondi/delimitMate.git
-  setup_vim_plugin vim-airline https://github.com/vim-airline/vim-airline
+  setup_vim_plugin https://github.com/Raimondi/delimitMate.git
+  setup_vim_plugin https://github.com/vim-airline/vim-airline.git
+  setup_vim_plugin https://github.com/ctrlpvim/ctrlp.vim.git
+  setup_vim_plugin https://github.com/tpope/vim-surround.git
+
   cd ${DIR}
 
   #### Setup Script/RC symlinks ####
@@ -123,4 +129,4 @@ main() {
   exit 0
 }
 
-main
+main "$@"

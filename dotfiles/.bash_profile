@@ -98,7 +98,7 @@ alias viewimage='open -a Preview'
 
 alias c='clear'
 alias path='echo -e ${PATH//:/\\n}'
-alias svi='sudo vi'
+alias svi='sudo vim'
 alias vis='vim "+set si"'
 alias edit='vim'
 alias ports='netstat -tulanp'
@@ -144,6 +144,14 @@ alias ginst='go install'
 
 alias curlkv='curl -k -v'
 
+##### Vim Setup ###############################################################
+
+if which -s vim; then
+  if [ ! -L '/usr/local/bin/vi' ]; then
+    ln -s "$(which vim)" /usr/local/bin/vi
+  fi
+fi
+
 ###### PATH Manipulation ######################################################
 
 export PATH=/usr/local/bin:$PATH
@@ -172,13 +180,6 @@ if [ -d "${HOME}/.bash_profile.d" ] && [ -n "$(ls -A "${HOME}/.bash_profile.d/")
     echo "Sourcing $f"
     . "$f"
   done
-fi
-
-##### Setup Speedtest Tool ####################################################
-
-if [ ! -e "${HOME}/bin/speedtest-cli" ]; then
-  curl -sLo ${HOME}/bin/speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest_cli.py
-  chmod +x ${HOME}/bin/speedtest-cli
 fi
 
 ##### Bash Functions ##########################################################
