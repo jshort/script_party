@@ -19,8 +19,10 @@ let delimitMate_expand_space = 1
 " ctrlp settings
 let g:ctrlp_show_hidden = 1
 " grep config
-let &grepprg = 'grep -n -R --exclude-dir={target,build,.git,.svn}'
-command! -nargs=+ Grep execute 'silent grep! <args>' | copen
+let &grepprg = 'grep -n -R -s --exclude-dir={target,build,.git,.svn}'
+command! -nargs=+ Grep execute 'silent grep! <args>' | copen 15
+" help command for full window
+command! -nargs=+ Help execute 'silent help <args>' | only
 
 " ##### Common Settings #####
 " Turn on line numbers, word wrap, and ruler
@@ -45,8 +47,8 @@ filetype indent on
 " set listchars=tab:>-,trail:-
 set lcs=eol:$,tab:>-,trail:#
 " Highlight trailing whitespace in red
-:highlight ExtraWhitespace ctermbg=red guibg=red
-:match ExtraWhitespace /\s\+$/
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
 
 
 " ##### Global Tab/Space config #####
