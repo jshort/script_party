@@ -11,7 +11,9 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 " Set netrw file listing style
-let g:netrw_liststyle=3
+let g:netrw_liststyle = 0
+let g:netrw_hide = 1
+set wildignore=*.swp,.git/
 " This speeds up <ESC> in visual mode
 set timeoutlen=1000 ttimeoutlen=0
 " delimitMate <Space> expansion

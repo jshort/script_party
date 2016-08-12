@@ -113,6 +113,7 @@ main() {
   setup_vim_plugin https://github.com/vim-airline/vim-airline.git
   setup_vim_plugin https://github.com/ctrlpvim/ctrlp.vim.git
   setup_vim_plugin https://github.com/tpope/vim-surround.git
+  setup_vim_plugin https://github.com/tpope/vim-vinegar.git
 
   cd ${DIR}
 

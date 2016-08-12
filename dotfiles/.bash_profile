@@ -99,7 +99,7 @@ alias viewimage='open -a Preview'
 alias c='clear'
 alias path='echo -e ${PATH//:/\\n}'
 alias svi='sudo vim'
-alias vis='vim "+set si"'
+alias vime="vim +':Ex'"
 alias edit='vim'
 alias ports='netstat -tulanp'
 
