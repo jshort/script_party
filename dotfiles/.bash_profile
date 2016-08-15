@@ -98,9 +98,6 @@ alias viewimage='open -a Preview'
 
 alias c='clear'
 alias path='echo -e ${PATH//:/\\n}'
-alias svi='sudo vim'
-alias vime="vim +':Ex'"
-alias edit='vim'
 alias ports='netstat -tulanp'
 
 ## pass options to free ##
@@ -143,14 +140,6 @@ alias ginst='go install'
 ##### Curl Aliases ############################################################
 
 alias curlkv='curl -k -v'
-
-##### Vim Setup ###############################################################
-
-if which -s vim; then
-  if [ ! -L '/usr/local/bin/vi' ]; then
-    ln -s "$(which vim)" /usr/local/bin/vi
-  fi
-fi
 
 ###### PATH Manipulation ######################################################
 

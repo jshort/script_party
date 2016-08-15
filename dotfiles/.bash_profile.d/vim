@@ -1,0 +1,28 @@
+#!bash
+
+##### Vim Setup ###############################################################
+
+alias svi='sudo vim'
+alias vimex="vim +':Ex'"
+alias edit='vim'
+
+if which -s vim; then
+  if [ ! -L '/usr/local/bin/vi' ]; then
+    ln -s "$(which vim)" /usr/local/bin/vi
+  fi
+fi
+
+vimdir() {
+  local ERR_MSG="Please call ${FUNCNAME[0]} with one directory as the arg."
+  if [ "$#" -ne 1  ]; then
+    echo "${ERR_MSG}"
+    return 1
+  fi
+
+  local dir="$1"
+  if [ ! -d "$dir" ]; then
+    echo "${ERR_MSG}"
+    return 1
+  fi
+  vim +':Ex' +':bd 1' "$dir"
+}

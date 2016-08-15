@@ -3,7 +3,6 @@
 ##### Notes #####
 # Map at the system level Caps Lock to Control
 # Powerline/iTerm2 setup: https://coderwall.com/p/yiot4q/setup-vim-powerline-and-iterm2-on-mac-os-x
-# Use brew pip (from Vim install):  pip install --user powerline-status (might not be necessary)
 # Fonts: git clone https://github.com/powerline/fonts.git && cd fonts && ./install.sh
 # Set iTerm2 font (non-ASCII too) to be: Inconsolata for powerline 14pt
 
@@ -18,6 +17,7 @@ DOTFILES=(
   .vimrc
   .bash_profile.d/rbenv
   .bash_profile.d/ssh-agent-config
+  .bash_profile.d/vim
 )
 
 FILE_SCRIPTS=(
