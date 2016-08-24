@@ -3,6 +3,9 @@ execute pathogen#infect()
 "###############################################################################
 
 "###### 2) Common Settings #####################################################
+filetype on
+filetype plugin on
+filetype indent on
 " Turn on line numbers, word wrap, and ruler
 set backspace=2
 set noshowmode
@@ -17,6 +20,7 @@ set hidden
 
 
 "###### 3) Color Scheme ########################################################
+syntax on
 colo peachpuff
 "###############################################################################
 
@@ -47,20 +51,17 @@ command! -nargs=+ Help execute 'silent help <args>' | only
 
 
 "###### 5) Highlighting ########################################################
-syntax on
-filetype plugin on
-filetype indent on
-"" set listchars=tab:>-,trail:-
 set lcs=eol:$,tab:>-,trail:#
-" Highlight trailing whitespace in red
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
+"" set listchars=tab:>-,trail:-
 " Turn on search highlighting (in progress and complete)
 set incsearch
 set hlsearch
 " Search and line number highlighting colors
-autocmd ColorScheme * hi Search ctermbg=Blue
-autocmd ColorScheme * hi LineNr ctermfg=green
+highlight Search ctermbg=Blue
+highlight LineNr ctermfg=green
+" Highlight trailing whitespace in red
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
 "###############################################################################
 
 
@@ -86,12 +87,14 @@ autocmd FileType java   setlocal sw=4 sts=4 expandtab tw=120 fo+=t
 
 
 "###### 8) Key (re)mappings ####################################################
-" <Esc> to jj to keep fingers on home keys
-inoremap jj <Esc>
 " Change leader to space key
 let mapleader = "\<Space>"
+" <Esc> to jj to keep fingers on home keys
+inoremap jj <Esc>
+" Paste from system clipboard
+inoremap <C-v> <C-r>*
 " Turn off search highlighting
-map <silent> <leader>j :noh<CR>
+nnoremap <silent> <leader>j :noh<CR>
 " Toggle crosshairs
 nnoremap <silent> <leader>k :call CrosshairToggle()<CR>
 " To open a new empty buffer
@@ -102,14 +105,13 @@ nmap <leader>l :bnext<CR>
 " Move to the previous buffer
 nmap <leader>h :bprevious<CR>
 " Close the current buffer and move to the previous one
-" This replicates the idea of closing a tab
 nmap <leader>q :bp <Bar> bd #<CR>
-" Mapping to automatically expand to the path of the current buffer
-cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 " Update current buffer if it has changes (think cmd-s to save)
 nmap <leader>s :update<CR>
 " Exit command/search history
 nmap <leader>c <C-c><C-c>
+" Mapping to automatically expand to the path of the current buffer
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
 
 "###### 9) Cross hairs #########################################################

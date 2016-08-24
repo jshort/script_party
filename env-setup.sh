@@ -109,11 +109,14 @@ main() {
   # Plugins
   echo "Setting up VIM plugins:"
   cd ${HOME}/.vim/bundle
+  setup_vim_plugin https://github.com/ctrlpvim/ctrlp.vim.git
   setup_vim_plugin https://github.com/Raimondi/delimitMate.git
   setup_vim_plugin https://github.com/vim-airline/vim-airline.git
-  setup_vim_plugin https://github.com/ctrlpvim/ctrlp.vim.git
+  setup_vim_plugin https://github.com/tpope/vim-commentary.git
+  setup_vim_plugin https://github.com/tpope/vim-endwise.git
   setup_vim_plugin https://github.com/tpope/vim-surround.git
   setup_vim_plugin https://github.com/tpope/vim-vinegar.git
+  setup_vim_plugin https://github.com/bronson/vim-visual-star-search.git
 
   cd ${DIR}
 
