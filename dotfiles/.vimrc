@@ -92,13 +92,12 @@ let mapleader = "\<Space>"
 " <Esc> to jj to keep fingers on home keys
 inoremap jj <Esc>
 " Paste from system clipboard
-inoremap <C-v> <C-r>*
+inoremap vv <C-r>*
 " Turn off search highlighting
 nnoremap <silent> <leader>j :noh<CR>
 " Toggle crosshairs
 nnoremap <silent> <leader>k :call CrosshairToggle()<CR>
 " To open a new empty buffer
-" This replaces :tabnew which I used to bind to this mapping
 nmap <leader>t :enew<CR>
 " Move to the next buffer
 nmap <leader>l :bnext<CR>
@@ -149,4 +148,6 @@ endfunc
 " Swap current line with one above
 let @a = 'ddp'
 let @b = 'mz:%s/mipselled/mispelled/g`z'
+" Surround word by spaces
+let @s = 'ciw  P'
 "###############################################################################
