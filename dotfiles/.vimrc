@@ -94,7 +94,7 @@ inoremap jj <Esc>
 " Paste from system clipboard
 inoremap vv <C-r>*
 " Turn off search highlighting
-nnoremap <silent> <leader>j :noh<CR>
+nnoremap <silent> <leader>j :nohlsearch<CR>
 " Toggle crosshairs
 nnoremap <silent> <leader>k :call CrosshairToggle()<CR>
 " To open a new empty buffer
@@ -104,13 +104,18 @@ nmap <leader>l :bnext<CR>
 " Move to the previous buffer
 nmap <leader>h :bprevious<CR>
 " Close the current buffer and move to the previous one
-nmap <leader>q :bp <Bar> bd #<CR>
+nmap <leader>q :bprevious <Bar> bdelete #<CR>
 " Update current buffer if it has changes (think cmd-s to save)
 nmap <leader>s :update<CR>
 " Exit command/search history
 nmap <leader>c <C-c><C-c>
+" write file as sudo if you forgot to start vim with sudo
+cmap w!! write !sudo tee > /dev/null %
 " Mapping to automatically expand to the path of the current buffer
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+" Mappings for up/down in command mode for scrolling through history
+cnoremap <C-k> <Up>
+cnoremap <C-j> <Down>
 
 
 "###### 9) Cross hairs #########################################################

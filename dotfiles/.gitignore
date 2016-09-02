@@ -49,3 +49,6 @@ config.codekit
 # build tools
 /build
 target
+
+# Vim files #
+*.swp
