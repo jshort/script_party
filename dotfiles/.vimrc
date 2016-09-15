@@ -42,6 +42,7 @@ set timeoutlen=1000 ttimeoutlen=0
 let delimitMate_expand_space = 1
 " ctrlp settings
 let g:ctrlp_show_hidden = 1
+let g:ctrlp_working_path_mode = 'w'
 " grep config
 let &grepprg = 'grep -n -R -s --exclude-dir={target,build,.git,.svn}'
 command! -nargs=+ Grep execute 'silent grep! <args>' | copen 15

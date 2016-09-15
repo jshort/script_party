@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-getHelp() {
+get_help() {
   echo "usage: $0 [-h|--help] [dir] [fileExtension]" >&2
   exit 1
 }
@@ -11,17 +11,17 @@ while getopts "$optspec" optchar; do
     -)
       case "${OPTARG}" in
         help)
-          getHelp
+          get_help
           ;;
         *)
-          getHelp
+          get_help
           ;;
       esac;;
     h)
-      getHelp
+      get_help
       ;;
     *)
-      getHelp
+      get_help
       ;;
   esac
 done

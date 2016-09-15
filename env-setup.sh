@@ -18,6 +18,7 @@ DOTFILES=(
   .bash_profile.d/rbenv
   .bash_profile.d/ssh-agent-config
   .bash_profile.d/vim
+  .bash_profile.d/speedtest-cli
 )
 
 FILE_SCRIPTS=(
@@ -25,6 +26,7 @@ FILE_SCRIPTS=(
   count_loc.sh
   remove_tabs.sh
   replace_space_underscore.sh
+  find_in_jar
 )
 
 GIT_SCRIPTS=(

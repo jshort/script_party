@@ -1,0 +1,27 @@
+#!/bin/bash
+
+get_help() {
+  echo "usage: ${0##*/} SEARCH_DIR CLASS_NAME" >&2
+  exit 1
+}
+
+JARBIN=$(which jar)
+if [ -z "$JARBIN" ]; then
+  JARBIN="${JAVA_HOME}/bin/jar"
+fi
+
+SEARCH_DIR=${1}
+CLASS_NAME=${2}
+
+if [ -z "$SEARCH_DIR" -o -z "$CLASS_NAME" ]; then
+  get_help
+fi
+
+for i in $(ls -1 ${SEARCH_DIR}/*.jar); do
+  jar_output=$($JARBIN tvf $i | grep ${CLASS_NAME})
+  if [ -n "$jar_output" ]; then
+    echo "Jar: $i"
+    echo "Files: "
+    echo "$jar_output" | sed 's/^/  /g'
+  fi
+done

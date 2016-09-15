@@ -5,7 +5,7 @@
 #   $1 - directory (defaults to '.')
 #   $2 - file regex pattern (defaults to .java,.xml,.properties,.sh,.pm,.pl,.MF)
 
-getHelp() {
+get_help() {
   echo "usage: $0 [-h|--help] [dir] [fileRegex]" >&2
   exit 1
 }
@@ -16,17 +16,17 @@ while getopts "$optspec" optchar; do
     -)
       case "${OPTARG}" in
         help)
-          getHelp
+          get_help
           ;;
         *)
-          getHelp
+          get_help
           ;;
       esac;;
     h)
-      getHelp
+      get_help
       ;;
     *)
-      getHelp
+      get_help
       ;;
   esac
 done
