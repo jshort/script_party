@@ -61,6 +61,10 @@ if [[ $(uname) == 'Darwin' ]]; then
   if [ -e '/usr/local/bin/gsed' ]; then
     alias sed='/usr/local/bin/gsed'
   fi
+  alias ldd='otool -L'
+  brewdeps() {
+    brew list | while read cask; do echo -e -n "\033[1;34m$cask\033[m"; brew deps $cask | awk '{printf(" %s ", $0)}'; echo ""; done
+  }
 else
   # Linux
   hostname=$(hostname)
