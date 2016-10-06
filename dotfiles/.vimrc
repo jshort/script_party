@@ -3,6 +3,7 @@ execute pathogen#infect()
 "###############################################################################
 
 "###### 2) Common Settings #####################################################
+set directory=~/.vim/tmp//,~/tmp//,/tmp//
 filetype on
 filetype plugin on
 filetype indent on

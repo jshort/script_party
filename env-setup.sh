@@ -94,6 +94,7 @@ symlink_dirs() {
 
 main() {
   ##### Setup VIM ####
+  mkdir -p ${HOME}/.vim/tmp
   echo "Setting up Pathogen for VIM:"
   mkdir -p ${HOME}/.vim/autoload ${HOME}/.vim/bundle ${HOME}/.vim/syntax
   if [ ! -e "${HOME}/.vim/autoload/pathogen.vim" ]; then
