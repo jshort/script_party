@@ -118,6 +118,8 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 " Mappings for up/down in command mode for scrolling through history
 cnoremap <C-k> <Up>
 cnoremap <C-j> <Down>
+" Grep recursively in cwd for the current word using custom Grep
+nnoremap gr :Grep <cword> .<CR>
 
 
 "###### 9) Cross hairs #########################################################
