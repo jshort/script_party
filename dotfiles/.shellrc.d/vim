@@ -6,7 +6,7 @@ alias svi='sudo vim'
 alias vimex="vim +':Ex'"
 alias edit='vim'
 
-if which -s vim; then
+if which vim > /dev/null; then
   if [ ! -L '/usr/local/bin/vi' ]; then
     ln -s "$(which vim)" /usr/local/bin/vi
   fi

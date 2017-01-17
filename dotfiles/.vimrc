@@ -22,7 +22,7 @@ set hidden
 
 "###### 3) Color Scheme ########################################################
 syntax on
-colo peachpuff
+colorscheme koehler
 "###############################################################################
 
 
@@ -59,8 +59,8 @@ set lcs=eol:$,tab:>-,trail:#
 set incsearch
 set hlsearch
 " Search and line number highlighting colors
-highlight Search ctermbg=Blue
-highlight LineNr ctermfg=green
+highlight Search ctermbg=57
+highlight LineNr ctermfg=46
 " Highlight trailing whitespace in red
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -78,7 +78,7 @@ set pastetoggle=<F2>
 
 
 "###### 7) Filetype specific configuration #####################################
-autocmd FileType sh,ruby,python,java autocmd BufWrite <buffer> :call DeleteTrailingWS()
+autocmd FileType c,sh,ruby,python,java autocmd BufWrite <buffer> :call DeleteTrailingWS()
 autocmd BufRead,BufNewFile *.go setfiletype go
 autocmd FileType python setlocal sw=4 sts=4 expandtab tw=80  fo+=t
 autocmd FileType sh     setlocal sw=2 sts=2 expandtab tw=80  fo+=t
@@ -125,10 +125,8 @@ nnoremap gr :Grep <cword> .<CR>
 "###### 9) Cross hairs #########################################################
 set cursorline
 set cursorcolumn
-" hi Cursor ctermbg=15 ctermfg=8
-hi CursorColumn ctermbg=8 "8 = dark gray"
-" hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white
-hi CursorLine cterm=NONE ctermbg=8 ctermfg=15 "8 = dark gray, 15 = white
+hi CursorColumn ctermbg=243
+hi CursorLine   ctermbg=243 cterm=NONE ctermfg=15
 "###############################################################################
 
 

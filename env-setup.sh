@@ -13,12 +13,16 @@ DOTFILES=(
   .bash_profile
   .gitconfig
   .gitignore
+  .shellrc_bash
+  .shellrc_zsh
+  .shellrc.d/rbenv
+  .shellrc.d/speedtest-cli
+  .shellrc.d/ssh-agent-config
+  .shellrc.d/vim
+  .shellrc.d/oh-my-zsh
   .vim/syntax/go.vim
   .vimrc
-  .bash_profile.d/rbenv
-  .bash_profile.d/ssh-agent-config
-  .bash_profile.d/vim
-  .bash_profile.d/speedtest-cli
+  .zshrc
 )
 
 FILE_SCRIPTS=(

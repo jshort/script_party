@@ -1,0 +1,17 @@
+#!/bin/sh
+
+OM_ZSH_HOME="${HOME}/.oh-my-zsh"
+
+if [ -d "${OM_ZSH_HOME}" ]; then
+  pushd "${OM_ZSH_HOME}" > /dev/null
+  /bin/sh tools/upgrade.sh > /dev/null
+  popd > /dev/null
+else
+  git clone https://github.com/robbyrussell/oh-my-zsh.git ${OM_ZSH_HOME} || {
+    printf "Error: git clone of oh-my-zsh repo failed\n"
+    exit 1
+  }
+  git clone https://github.com/bhilburn/powerlevel9k.git ${OM_ZSH_HOME}/custom/themes/powerlevel9k
+  echo "oh my zsh is installed."
+fi
+
