@@ -47,6 +47,11 @@ SSH_SCRIPTS=(
   ssh-config
 )
 
+OTHER_SCRIPTS=(
+  screen_grep
+  fullload
+)
+
 indent4() { sed 's/^/    /'; }
 
 cleanup_dir() {
@@ -135,6 +140,7 @@ main() {
   symlink_dirs "$DIR/ssh_config" "$HOME/bin" SSH_SCRIPTS[@]
   symlink_dirs "$DIR/git" "$HOME/bin" GIT_SCRIPTS[@]
   symlink_dirs "$DIR/vagrant_mgmt" "$HOME/bin" VAGRANT_SCRIPTS[@]
+  symlink_dirs "$DIR/other_scripts" "$HOME/bin" OTHER_SCRIPTS[@]
 
   echo "Setup Complete"
   exit 0

@@ -20,7 +20,7 @@ fulload() {
 
 fulload
 
-echo "Hit enter to stop load"
+echo 'Hit enter to halt load'
 read
 
 killall dd
