@@ -14,9 +14,6 @@ if [[ $(uname) == 'Darwin' ]]; then
     alias sed='/usr/local/bin/gsed'
   fi
   alias ldd='otool -L'
-  brewdeps() {
-    brew list | while read cask; do echo -e -n "\033[1;34m$cask\033[m"; brew deps $cask | awk '{printf(" %s ", $0)}'; echo ""; done
-  }
 else
   # Linux
   hostname=$(hostname)
@@ -37,7 +34,7 @@ alias nailgun='java -cp /Users/jshort/.vim/lib/server-2.3.0.jar:/Users/jshort/cl
 alias buildnt='mvn clean install -DskipTests'
 alias mci='mvn clean install'
 alias mc='mvn clean'
-alias mrun='mvn jettyd:run'
+alias mrun='mvn jetty:run'
 alias checkstyle='mvn checkstyle:checkstyle'
 
 # generic
@@ -128,9 +125,9 @@ psproc() {
 ##### Shell Specific logic ####################################################
 
 if [ ${0} = '-bash' -o ${0} = 'bash' ]; then
-  source .shellrc_bash
-elif [ ${0} = '-zsh' ]; then
-  source .shellrc_zsh
+  source ${HOME}/.shellrc_bash
+elif [ ${0} = '-zsh' -o ${0} = 'zsh' ]; then
+  source ${HOME}/.shellrc_zsh
 else
   echo "Unknown shell rc file!"
   exit 1

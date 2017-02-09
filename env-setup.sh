@@ -50,6 +50,7 @@ SSH_SCRIPTS=(
 OTHER_SCRIPTS=(
   screen_grep
   fullload
+  brewdeps
 )
 
 indent4() { sed 's/^/    /'; }
