@@ -124,9 +124,10 @@ psproc() {
 
 ##### Shell Specific logic ####################################################
 
-if [ ${0} = '-bash' -o ${0} = 'bash' ]; then
+SHELL_PROG=${0##*/}
+if [ ${SHELL_PROG} = '-bash' -o ${SHELL_PROG} = 'bash' ]; then
   source ${HOME}/.shellrc_bash
-elif [ ${0} = '-zsh' -o ${0} = 'zsh' ]; then
+elif [ ${SHELL_PROG} = '-zsh' -o ${SHELL_PROG} = 'zsh' ]; then
   source ${HOME}/.shellrc_zsh
 else
   echo "Unknown shell rc file!"
