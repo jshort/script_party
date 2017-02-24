@@ -50,6 +50,9 @@ SSH_SCRIPTS=(
 OTHER_SCRIPTS=(
   screen_grep
   fullload
+)
+
+BREW=(
   brewdeps
 )
 
@@ -142,6 +145,7 @@ main() {
   symlink_dirs "$DIR/git" "$HOME/bin" GIT_SCRIPTS[@]
   symlink_dirs "$DIR/vagrant_mgmt" "$HOME/bin" VAGRANT_SCRIPTS[@]
   symlink_dirs "$DIR/other_scripts" "$HOME/bin" OTHER_SCRIPTS[@]
+  symlink_dirs "$DIR/brew" "$HOME/bin" BREW[@]
 
   echo "Setup Complete"
   exit 0

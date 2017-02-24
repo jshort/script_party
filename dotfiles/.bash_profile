@@ -10,10 +10,16 @@ if [[ $(uname) == 'Darwin' ]]; then
   export LSCOLORS=GxFxCxDxBxegedabagaced
   alias ls='ls -GpF'
   alias ps='ps -ej'
+  alias psuptime='ps -ax -o etime,command -c'
   if [ -e '/usr/local/bin/gsed' ]; then
     alias sed='/usr/local/bin/gsed'
   fi
+  if [ -e '/usr/local/bin/gdate' ]; then
+    alias date='/usr/local/bin/gdate'
+  fi
   alias ldd='otool -L'
+  alias md5sum='md5 -r'
+  alias netstat-tunlp='sudo lsof -i -n -P | grep TCP'
 else
   # Linux
   hostname=$(hostname)
@@ -44,7 +50,6 @@ alias l.='ls -d .*'
 alias jj='java -jar'
 alias ssha='eval $(ssh-agent) && ssh-add'
 alias cdwp='cd ~/workplace2.0'
-alias md5sum='md5 -r'
 alias sha1='openssl sha1'
 
 alias viewimage='open -a Preview'
@@ -76,8 +81,6 @@ alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
 alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
 alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
 alias firewall=iptlist
-
-alias netstat-tunlp='sudo lsof -i -n -P | grep TCP'
 
 ##### Vagrant Aliases #########################################################
 
@@ -120,6 +123,14 @@ psproc() {
   else
     \ps -e -o pid,etime,command
   fi
+}
+
+msecs() {
+  echo $(($(nsecs)/1000000))
+}
+
+nsecs() {
+  echo $(date +%s%N)
 }
 
 ##### Shell Specific logic ####################################################
