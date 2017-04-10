@@ -120,6 +120,8 @@ cnoremap <C-k> <Up>
 cnoremap <C-j> <Down>
 " Grep recursively in cwd for the current word using custom Grep
 nnoremap gr :Grep <cword> .<CR>
+" Java getter/setter generation
+map ggs ^mawv/ <CR>"ty/ <CR>wvwh"ny/setters<CR>$a<CR><ESC>xxa<CR>public void <Esc>"npbiset<Esc>l~ea(<Esc>"tpa<Esc>"npa) {<CR><Tab>this.<Esc>"npa = <Esc>"npa;<CR>}<Esc>=<CR><ESC>/getters<CR>$a<CR><ESC>xxa<CR>public <Esc>"tpa<Esc>"npbiget<Esc>l~ea() {<CR><Tab>return <Esc>"npa;<CR>}<Esc>=<CR><Esc>`ak
 
 
 "###### 9) Cross hairs #########################################################

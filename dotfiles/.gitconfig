@@ -11,7 +11,7 @@
 [push]
         default = simple
 [alias]
-        ca = commit --amend
+        ca = commit --amend --no-edit
         dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
         st = status
         pr = pull --rebase
