@@ -11,15 +11,16 @@ DIR=$(cd $(/usr/bin/dirname $0) 2>/dev/null && pwd)
 DOTFILES=(
   .bash_completion
   .bash_profile
+  .config/nvim/init.vim
   .gitconfig
   .gitignore
-  .shellrc_bash
-  .shellrc_zsh
+  .shellrc.d/oh-my-zsh
   .shellrc.d/rbenv
   .shellrc.d/speedtest-cli
   .shellrc.d/ssh-agent-config
   .shellrc.d/vim
-  .shellrc.d/oh-my-zsh
+  .shellrc_bash
+  .shellrc_zsh
   .vim/syntax/go.vim
   .vimrc
   .zshrc
