@@ -49,7 +49,7 @@ alias ll='ls -la'
 alias l.='ls -d .*'
 alias jj='java -jar'
 alias ssha='eval $(ssh-agent) && ssh-add'
-alias cdwp='cd ~/workplace2.0'
+alias cdwp='cd ~/workplace'
 alias sha1='openssl sha1'
 
 alias viewimage='open -a Preview'
@@ -63,6 +63,7 @@ alias meminfo='free -m -l -t'
 
 ## get top process eating memory
 alias psmem='\ps -e -o pid,%cpu,%mem,command | tail -n +2 | sort -nr -k 3 | head -10'
+alias psmemall='\ps -e -o pid,rss,vsz,command | grep'
 
 ## get top process eating cpu ##
 alias pscpu='\ps -e -o pid,%cpu,%mem,command | tail -n +2 | sort -nr -k 2 | head -10'
