@@ -21,7 +21,6 @@ DOTFILES=(
   .shellrc.d/vim
   .shellrc_bash
   .shellrc_zsh
-  .vim/syntax/go.vim
   .vimrc
   .zshrc
 )
@@ -79,7 +78,10 @@ setup_vim_plugin() {
     echo "    Setting up plugin: $plugin_name"
     git clone $plugin_git_url | indent4
   else
-    echo "    Plugin $plugin_name already exists, skipping..."
+    echo "    Plugin $plugin_name already exists, updating..."
+    pushd $plugin_name > /dev/null
+    git pull | indent4
+    popd > /dev/null
   fi
 }
 
@@ -110,7 +112,7 @@ main() {
   ##### Setup VIM ####
   mkdir -p ${HOME}/.vim/tmp
   echo "Setting up Pathogen for VIM:"
-  mkdir -p ${HOME}/.vim/autoload ${HOME}/.vim/bundle ${HOME}/.vim/syntax
+  mkdir -p ${HOME}/.vim/autoload ${HOME}/.vim/bundle
   if [ ! -e "${HOME}/.vim/autoload/pathogen.vim" ]; then
     echo "    Pulling down Pathogen for VIM."
     curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
@@ -126,14 +128,15 @@ main() {
   # Plugins
   echo "Setting up VIM plugins:"
   cd ${HOME}/.vim/bundle
-  setup_vim_plugin https://github.com/ctrlpvim/ctrlp.vim.git
   setup_vim_plugin https://github.com/Raimondi/delimitMate.git
-  setup_vim_plugin https://github.com/vim-airline/vim-airline.git
+  setup_vim_plugin https://github.com/bronson/vim-visual-star-search.git
+  setup_vim_plugin https://github.com/ctrlpvim/ctrlp.vim.git
+  setup_vim_plugin https://github.com/skywind3000/asyncrun.vim.git
   setup_vim_plugin https://github.com/tpope/vim-commentary.git
   setup_vim_plugin https://github.com/tpope/vim-endwise.git
   setup_vim_plugin https://github.com/tpope/vim-surround.git
   setup_vim_plugin https://github.com/tpope/vim-vinegar.git
-  setup_vim_plugin https://github.com/bronson/vim-visual-star-search.git
+  setup_vim_plugin https://github.com/vim-airline/vim-airline.git
 
   cd ${DIR}
 
