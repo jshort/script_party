@@ -56,7 +56,14 @@ BREW=(
   brewdeps
 )
 
-indent4() { sed 's/^/    /'; }
+function indent () {
+    local string="$1"
+    local num_spaces="$2"
+
+    while read -r line; do
+      printf "%${num_spaces}s%s\n" '' "$line"
+    done <<< "$string"
+}
 
 cleanup_dir() {
   dir="$1"
@@ -75,12 +82,12 @@ setup_vim_plugin() {
   plugin_git_url=$1
   plugin_name="$(basename $plugin_git_url .git)"
   if [ ! -d "$plugin_name" ]; then
-    echo "    Setting up plugin: $plugin_name"
-    git clone $plugin_git_url | indent4
+    indent "Setting up plugin: $plugin_name" 4
+    indent "$(git clone $plugin_git_url 2>&1)" 8
   else
-    echo "    Plugin $plugin_name already exists, updating..."
+    indent "Plugin $plugin_name already exists, updating..." 4
     pushd $plugin_name > /dev/null
-    git pull | indent4
+    indent "$(git pull)" 8
     popd > /dev/null
   fi
 }
@@ -93,16 +100,16 @@ symlink_dirs() {
   for i in "${file_arr[@]}"; do
     target="$target_dir/$i"
     if [ ! -d "$(/usr/bin/dirname $target)" ]; then
-      echo "    Base dir for $target does not exist, creating it..."
+      indent "Base dir for $target does not exist, creating it..." 4
       mkdir -p $(/usr/bin/dirname $target)
     fi
 
     if [ -L "$target" ]; then
-      echo "    $target is already symlinked."
+      indent "$target is already symlinked." 4
     elif [ -e "$target" ]; then
-      echo "    $target is already a file."
+      indent "$target is already a file." 4
     else
-      echo "    Symlinking $target."
+      indent "Symlinking $target." 4
       ln -s "$dir_prefix/$i" "$target"
     fi
   done
@@ -111,23 +118,17 @@ symlink_dirs() {
 main() {
   ##### Setup VIM ####
   mkdir -p ${HOME}/.vim/tmp
-  echo "Setting up Pathogen for VIM:"
-  mkdir -p ${HOME}/.vim/autoload ${HOME}/.vim/bundle
-  if [ ! -e "${HOME}/.vim/autoload/pathogen.vim" ]; then
-    echo "    Pulling down Pathogen for VIM."
-    curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-  else
-    echo "    Pathogen for VIM already exists, skipping..."
-  fi
+  mkdir -p ${HOME}/.vim/pack/dist/start
+
   # Powerline fonts
   if [ "$1" != "--no-fonts" ]; then
-    echo "Setting up Powerline fonts:"
+    indent "Setting up Powerline fonts:" 0
     setup_powerline_fonts
   fi
 
   # Plugins
-  echo "Setting up VIM plugins:"
-  cd ${HOME}/.vim/bundle
+  indent "Setting up VIM plugins:" 0
+  cd ${HOME}/.vim/pack/dist/start
   setup_vim_plugin https://github.com/Raimondi/delimitMate.git
   setup_vim_plugin https://github.com/bronson/vim-visual-star-search.git
   setup_vim_plugin https://github.com/ctrlpvim/ctrlp.vim.git
@@ -141,7 +142,7 @@ main() {
   cd ${DIR}
 
   #### Setup Script/RC symlinks ####
-  echo "Symlinking scripts and dotfiles:"
+  indent "Symlinking scripts and dotfiles:" 0
   mkdir -p $HOME/bin
   symlink_dirs "$DIR/dotfiles" $HOME DOTFILES[@]
   symlink_dirs "$DIR/file_scripts" "$HOME/bin" FILE_SCRIPTS[@]
@@ -151,7 +152,7 @@ main() {
   symlink_dirs "$DIR/other_scripts" "$HOME/bin" OTHER_SCRIPTS[@]
   symlink_dirs "$DIR/brew" "$HOME/bin" BREW[@]
 
-  echo "Setup Complete"
+  indent "Setup Complete" 0
   exit 0
 }
 

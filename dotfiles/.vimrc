@@ -1,5 +1,3 @@
-execute pathogen#infect()
-
 "###### 1) Common Settings #####################################################
 set directory=~/.vim/tmp//,~/tmp//,/tmp//
 filetype on
@@ -31,7 +29,6 @@ set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 " Set netrw file listing style
 let g:netrw_liststyle = 0
 let g:netrw_hide = 1
@@ -47,9 +44,11 @@ let g:ctrlp_working_path_mode = 'w'
 command! -nargs=+ Grep execute 'silent AsyncRun grep -nRS --exclude-dir={target,build,.git,.svn} <args>'
 " help command for full window
 command! -nargs=+ Help execute 'silent help <args>' | only
-" automatically open quickfix window if not already
 augroup vimrc
+  " automatically open quickfix window if not already
   autocmd User AsyncRunStart call asyncrun#quickfix_toggle(10, 1)
+  " set asyncrun status
+  autocmd VimEnter * let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 augroup END
 "###############################################################################
 
