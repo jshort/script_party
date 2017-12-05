@@ -56,7 +56,7 @@ BREW=(
   brewdeps
 )
 
-function indent () {
+indent() {
     local string="$1"
     local num_spaces="$2"
 
@@ -138,6 +138,7 @@ main() {
   setup_vim_plugin https://github.com/tpope/vim-surround.git
   setup_vim_plugin https://github.com/tpope/vim-vinegar.git
   setup_vim_plugin https://github.com/vim-airline/vim-airline.git
+  setup_vim_plugin https://github.com/yangmillstheory/vim-snipe.git
 
   cd ${DIR}
 

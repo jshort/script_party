@@ -29,6 +29,8 @@ set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
+" vim-snipe highlighting
+let g:snipe_highlight_cterm256_color = 'cyan'
 " Set netrw file listing style
 let g:netrw_liststyle = 0
 let g:netrw_hide = 1
@@ -49,6 +51,7 @@ augroup vimrc
   autocmd User AsyncRunStart call asyncrun#quickfix_toggle(10, 1)
   " set asyncrun status
   autocmd VimEnter * let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
+  autocmd VimEnter * map <leader><leader>f <Plug>(snipe-f)
 augroup END
 "###############################################################################
 
