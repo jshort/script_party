@@ -32,14 +32,11 @@ fi
 
 alias start_mongo='mongod --dbpath ~/mongodb/data/db'
 
-# clojure
-alias clj='java -cp /Users/jshort/clojure-1.5.1/clojure-1.5.1.jar clojure.main'
-alias nailgun='java -cp /Users/jshort/.vim/lib/server-2.3.0.jar:/Users/jshort/clojure-1.5.1/clojure-1.5.1.jar vimclojure.nailgun.NGServer'
-
 # maven
 alias buildnt='mvn clean install -DskipTests'
 alias mci='mvn clean install'
 alias mc='mvn clean'
+alias mh='mvn help:describe -Ddetail' # then pass -Dcmd= or -Dplugin=<group>:<artifact>
 alias mrun='mvn jetty:run'
 alias checkstyle='mvn checkstyle:checkstyle'
 

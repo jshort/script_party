@@ -47,8 +47,8 @@ config.codekit
 *.iml
 
 # build tools
-/build
-target
+build/
+target/
 
 # Vim files #
 *.swp

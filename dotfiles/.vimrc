@@ -34,7 +34,7 @@ let g:snipe_highlight_cterm256_color = 'cyan'
 " Set netrw file listing style
 let g:netrw_liststyle = 0
 let g:netrw_hide = 1
-set wildignore=*.swp,.git/
+set wildignore=*.swp,.git/,*.class,target/
 " This speeds up <Esc> in visual mode
 set timeoutlen=1000 ttimeoutlen=0
 " delimitMate <Space> expansion
@@ -42,13 +42,12 @@ let delimitMate_expand_space = 1
 " ctrlp settings
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = 'w'
-" grep config
-command! -nargs=+ Grep execute 'silent AsyncRun grep -nRS --exclude-dir={target,build,.git,.svn} <args>'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
 " help command for full window
 command! -nargs=+ Help execute 'silent help <args>' | only
 augroup vimrc
   " automatically open quickfix window if not already
-  autocmd User AsyncRunStart call asyncrun#quickfix_toggle(10, 1)
+  autocmd User AsyncRunStart call asyncrun#quickfix_toggle(12, 1)
   " set asyncrun status
   autocmd VimEnter * let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
   autocmd VimEnter * map <leader><leader>f <Plug>(snipe-f)
@@ -82,12 +81,13 @@ set pastetoggle=<F2>
 
 
 "###### 6) Filetype specific configuration #####################################
-autocmd FileType c,sh,ruby,python,java autocmd BufWrite <buffer> :call DeleteTrailingWS()
+autocmd FileType c,sh,ruby,python,java,xml autocmd BufWrite <buffer> :call DeleteTrailingWS()
 autocmd FileType python setlocal sw=4 sts=4 expandtab tw=80  fo+=t
 autocmd FileType sh     setlocal sw=2 sts=2 expandtab tw=80  fo+=t
 autocmd FileType ruby   setlocal sw=2 sts=2 expandtab tw=80  fo+=t
 autocmd FileType go     setlocal sw=8 sts=8 expandtab
 autocmd FileType java   setlocal sw=4 sts=4 expandtab tw=120 fo+=t
+autocmd FileType xml    setlocal sw=2 sts=2 expandtab tw=120 fo+=t
 "###############################################################################
 
 
@@ -167,3 +167,10 @@ let @b = 'mz:%s/mipselled/mispelled/g`z'
 " Surround word by spaces
 let @s = 'ciw  P'
 "###############################################################################
+
+"###### 11) Custom Commands ####################################################
+" grep config
+command! -nargs=+ Grep execute 'silent AsyncRun grep -nRS --exclude-dir={target,build,.git,.svn} <args>'
+" maven build
+command! MCI execute 'AsyncRun mvn clean install'
+command! MC execute 'AsyncRun mvn clean'
