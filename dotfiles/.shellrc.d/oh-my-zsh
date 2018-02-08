@@ -2,16 +2,35 @@
 
 OM_ZSH_HOME="${HOME}/.oh-my-zsh"
 
+setup_update_plugin() {
+  local url=${1}
+  local dir=${2}
+  local plug_dir="${OM_ZSH_HOME}/${dir}"
+  if [ ! -d "${plug_dir}" ]; then
+    git clone "${url}" "${plug_dir}"
+  else
+    echo "    Updating plugin/theme: ${dir##*/}"
+    pushd "${plug_dir}" > /dev/null
+    git pull &> /dev/null
+    popd > /dev/null
+  fi
+}
+
 if [ -d "${OM_ZSH_HOME}" ]; then
+  echo "    Updating Oh My Zsh."
   pushd "${OM_ZSH_HOME}" > /dev/null
-  /bin/sh tools/upgrade.sh > /dev/null
+  /bin/sh tools/upgrade.sh &> /dev/null
   popd > /dev/null
 else
   git clone https://github.com/robbyrussell/oh-my-zsh.git ${OM_ZSH_HOME} || {
     printf "Error: git clone of oh-my-zsh repo failed\n"
     exit 1
   }
-  git clone https://github.com/bhilburn/powerlevel9k.git ${OM_ZSH_HOME}/custom/themes/powerlevel9k
   echo "oh my zsh is installed."
 fi
 
+# Plugins/themes
+setup_update_plugin https://github.com/bhilburn/powerlevel9k.git custom/themes/powerlevel9k
+setup_update_plugin https://github.com/zsh-users/zsh-syntax-highlighting.git custom/plugins/zsh-syntax-highlighting
+setup_update_plugin https://github.com/zsh-users/zsh-completions custom/plugins/zsh-completions
+setup_update_plugin git://github.com/zsh-users/zsh-autosuggestions plugins/zsh-autosuggestions

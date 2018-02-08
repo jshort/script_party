@@ -134,9 +134,9 @@ nsecs() {
 ##### Shell Specific logic ####################################################
 
 SHELL_PROG=${0##*/}
-if [ ${SHELL_PROG} = '-bash' -o ${SHELL_PROG} = 'bash' ]; then
+if [[ ${SHELL_PROG} = '-bash' || ${SHELL_PROG} == *'bash'* ]]; then
   source ${HOME}/.shellrc_bash
-elif [ ${SHELL_PROG} = '-zsh' -o ${SHELL_PROG} = 'zsh' ]; then
+elif [[ ${SHELL_PROG} = '-zsh' || ${SHELL_PROG} == *'zsh'* ]]; then
   source ${HOME}/.shellrc_zsh
 else
   echo "Unknown shell rc file!"
