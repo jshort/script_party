@@ -114,7 +114,13 @@ source $ZSH/oh-my-zsh.sh
 autoload -U compinit && compinit
 
 zbuiltin-help() {
-  man -P cat zshbuiltins | col -bx | sed -ne "/^       $1 /,/^       \S/{s/       //; p}" | sed '$d'
+  local padding='       '
+  man -P cat zshbuiltins | col -bx | \
+    awk "/^${padding}[^[:space:]]/{f=/^${padding}${1} /} f" | \
+    sed "s/^${padding}//" | \
+    less
+    # Below for posterity showing how silly it is to use sed when awk should be used.
+    # sed -ne "/^       $1 /{p; :loop n; p; /^       [^[:space:]]/{/^       $1/!q}; b loop}" | \
 }
 
 bindkey \^U backward-kill-line
@@ -124,3 +130,5 @@ unsetopt HIST_VERIFY
 
 # Make autosuggestion a dark grey. http://jonasjacek.github.io/colors/
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
+# accept and execute autosuggestion with <ctrl> + <space>
+bindkey '^ ' autosuggest-execute

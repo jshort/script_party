@@ -1,14 +1,29 @@
 #!/bin/bash
 
-##### Shell Agnostic Config ###################################################
+##### This file is for shell agnostic config ##################################
+
+##### Shell Specific logic ####################################################
+
+SHELL_PROG=${0##*/}
+if [[ ${SHELL_PROG} = '-bash' || ${SHELL_PROG} == *'bash'* ]]; then
+  source ${HOME}/.shellrc_bash
+elif [[ ${SHELL_PROG} = '-zsh' || ${SHELL_PROG} == *'zsh'* ]]; then
+  source ${HOME}/.shellrc_zsh
+else
+  echo "Unknown shell rc file!"
+  exit 1
+fi
 
 ##### OS Specific Logic #######################################################
+
+export LSCOLORS='GxFxCxDxBxegedabagaced'
+export LS_COLORS='rs=0:di=01;36:ln=01;35:mh=00:pi=40;33:so=01;32:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;31:'
 
 if [[ $(uname) == 'Darwin' ]]; then
   # MacOS
   hostname=$(scutil --get ComputerName)
-  export LSCOLORS=GxFxCxDxBxegedabagaced
   alias ls='ls -GpF'
+  [ -e /usr/local/bin/gls ] && alias ls='gls --color -F'
   alias ps='ps -ej'
   alias psuptime='ps -ax -o etime,command -c'
   if [ -e '/usr/local/bin/gsed' ]; then
@@ -23,7 +38,6 @@ if [[ $(uname) == 'Darwin' ]]; then
 else
   # Linux
   hostname=$(hostname)
-  export LS_COLORS="rs=0:di=01;36:ln=01;35:mh=00:pi=40;33:so=01;32:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;31:"
   alias ls='ls -pF --color=auto'
   alias ps='ps -ef'
 fi
@@ -31,6 +45,9 @@ fi
 ##### General Aliases #########################################################
 
 alias start_mongo='mongod --dbpath ~/mongodb/data/db'
+
+# hex dump utility
+alias od='od -c -t x1'
 
 # maven
 alias buildnt='mvn clean install -DskipTests'
@@ -104,15 +121,6 @@ export PATH="${HOME}/bin:$PATH"
 
 export PATH=$PATH:/usr/local/sbin
 
-##### Source other files ######################################################
-
-if [ -d "${HOME}/.shellrc.d" ] && [ -n "$(ls -A "${HOME}/.shellrc.d/")" ]; then
-  for f in "${HOME}/.shellrc.d/"*; do
-    echo "Sourcing $f"
-    source "$f"
-  done
-fi
-
 ##### Shell Functions #########################################################
 
 psproc() {
@@ -128,19 +136,20 @@ msecs() {
 }
 
 nsecs() {
-  echo $(date +%s%N)
+  python -c 'import time; print(int(time.time()*1000*1000*1000))'
+  # Below doens't work with BSD date and doesn't seem to have full granularity
+  # on MacOS, even with GNU date.
+  # echo $(date +%s%N)
 }
 
-##### Shell Specific logic ####################################################
+##### Source other files ######################################################
 
-SHELL_PROG=${0##*/}
-if [[ ${SHELL_PROG} = '-bash' || ${SHELL_PROG} == *'bash'* ]]; then
-  source ${HOME}/.shellrc_bash
-elif [[ ${SHELL_PROG} = '-zsh' || ${SHELL_PROG} == *'zsh'* ]]; then
-  source ${HOME}/.shellrc_zsh
-else
-  echo "Unknown shell rc file!"
-  exit 1
+if [ -d "${HOME}/.shellrc.d" ] && [ -n "$(ls -A "${HOME}/.shellrc.d/")" ]; then
+  for f in "${HOME}/.shellrc.d/"*; do
+    echo "Sourcing $f"
+    source "$f"
+  done
 fi
+
 
 echo "Shell initialization complete."
