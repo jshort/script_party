@@ -113,7 +113,12 @@ source $ZSH/oh-my-zsh.sh
 
 autoload -U compinit && compinit
 
-zbuiltin-help() {
+zhelp() {
+  if [ -z "${1}" ]; then
+    echo "***** Please pass a zsh builtin name. *****"
+    echo "Usage: zhelp NAME"
+    return 1
+  fi
   local padding='       '
   man -P cat zshbuiltins | col -bx | \
     awk "/^${padding}[^[:space:]]/{f=/^${padding}${1} /} f" | \

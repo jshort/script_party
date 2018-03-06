@@ -35,6 +35,7 @@ if [[ $(uname) == 'Darwin' ]]; then
   alias ldd='otool -L'
   alias md5sum='md5 -r'
   alias netstat-tunlp='sudo lsof -i -n -P | grep TCP'
+  alias viewimage='open -a Preview'
 else
   # Linux
   hostname=$(hostname)
@@ -65,8 +66,6 @@ alias jj='java -jar'
 alias ssha='eval $(ssh-agent) && ssh-add'
 alias cdwp='cd ~/workplace'
 alias sha1='openssl sha1'
-
-alias viewimage='open -a Preview'
 
 alias c='clear'
 alias path='echo -e ${PATH//:/\\n}'

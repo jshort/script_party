@@ -2,8 +2,10 @@ adns
 argp-standalone
 autoconf
 automake
+bison
 cmake
 coreutils
+flex
 freetype
 gdb
 gdbm
@@ -52,6 +54,7 @@ readline
 ruby
 ruby-build
 sqlite
+tree
 unibilium
 vim
 xz
