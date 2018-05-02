@@ -6,6 +6,8 @@ pkg_hash = {}
   pkg_hash[pkg] = {deps: [], child_count: 0}
 end
 
+pp pkg_hash if $DEBUG
+
 pkg_hash.each_key do |key|
   `brew deps #{key}`.each_line do |dep|
     pkg_hash[dep.strip][:child_count] += 1
@@ -13,7 +15,6 @@ pkg_hash.each_key do |key|
   end
 end
 
-pp pkg_hash #if $DEBUG
 
 pkg_hash.each do |k,v|
   if v[:child_count] == 0

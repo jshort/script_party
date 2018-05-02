@@ -23,6 +23,13 @@ colorscheme koehler
 
 
 "###### 3) Configuration/Variables/Commands ####################################
+" FZF config
+let $FZF_DEFAULT_COMMAND = $HOME."/.vim/fzfcmd"
+if has('nvim')
+  autocmd! FileType fzf
+  autocmd  FileType fzf set laststatus=0 noshowmode noruler
+    \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+endif
 " Set bash as the default shell syntax
 let g:bash_is_sh = 1
 let g:should_highlight = 1
@@ -41,10 +48,6 @@ set wildignore=*.o,*.so,*.a,*.pyc,*.swp,*/.git/*,*.class,*/target/*,*/.idea/*,*.
 set timeoutlen=1000 ttimeoutlen=0
 " delimitMate <Space> expansion
 let delimitMate_expand_space = 1
-" ctrlp settings
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_working_path_mode = 'w'
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(a|so|o|pyc|swp|ico|git|svn|idea|iml|DS_Store))$'
 " go-vim settings
 if has("nvim")
   au FileType go nmap <leader>r <Plug>(go-run-tab)
@@ -128,10 +131,10 @@ nmap <leader>q :bprevious <Bar> bdelete #<CR>
 nmap <leader>s :update<CR>
 " Exit command/search history
 nmap <leader>c <C-c><C-c>
-" Close quickfix (think 'done')
-nmap <leader>d :ccl <CR>
 " Open quickfix
 nmap <leader>o :copen <CR>
+" Close quickfix (think 'done')
+nmap <leader>d :ccl <CR>
 " write file as sudo if you forgot to start vim with sudo
 cmap w!! write !sudo tee > /dev/null %
 " Mapping to automatically expand to the path of the current buffer
@@ -139,6 +142,8 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 " Mappings for up/down in command mode for scrolling through history
 cnoremap <C-k> <Up>
 cnoremap <C-j> <Down>
+" ctrlp like mapping for fzf
+nnoremap <C-p> :FZF<CR>
 " Grep recursively in cwd for the current word using custom Grep
 nnoremap gr :Grep <cword> .<CR>
 " Java getter/setter generation

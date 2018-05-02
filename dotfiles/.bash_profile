@@ -152,3 +152,5 @@ fi
 
 
 echo "Shell initialization complete."
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

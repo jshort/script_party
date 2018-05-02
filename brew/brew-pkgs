@@ -5,11 +5,14 @@ automake
 bison
 cmake
 coreutils
+curl
 flex
 freetype
+fzf
 gdb
 gdbm
 gettext
+glide
 gmp
 gnu-sed
 gnupg
@@ -54,6 +57,7 @@ readline
 ruby
 ruby-build
 sqlite
+the_silver_searcher
 tree
 unibilium
 vim

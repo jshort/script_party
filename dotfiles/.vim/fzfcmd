@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -e
+set -o pipefail
+
+VIM_PATH="${HOME}/.vim"
+
+find_func() {
+  command find -E . -regex '.*/(node_modules|target|dist|\.git|\.svn|\.idea)/.*' -prune \
+    -o -regex '.*\.(a|so|o|pyc|swp|ico|iml|DS_Store)' -prune \
+    -o -type f -print \
+    -o -type l -print 2> /dev/null \
+      | cut -b3-
+  exit 0
+}
+
+ag_func() {
+  ag --hidden -f --ignore .git/ -g ''
+  exit 0
+}
+
+# If dependencies are already checked, short circuit
+if [ -e "${VIM_PATH}/.find" ]; then
+  find_func
+elif [ -e "${VIM_PATH}/.ag" ]; then
+  ag_func
+fi
+
+# Check for ag, if not found, use find
+if which ag > /dev/null; then
+  touch "${VIM_PATH}/.ag"
+  ag_func
+else
+  touch "${VIM_PATH}/.find"
+  find_func
+fi

@@ -21,6 +21,7 @@ DOTFILES=(
   .shellrc.d/vim
   .shellrc_bash
   .shellrc_zsh
+  .vim/fzfcmd
   .vimrc
   .zshrc
 )
@@ -131,8 +132,8 @@ main() {
   cd ${HOME}/.vim/pack/dist/start
   setup_vim_plugin https://github.com/Raimondi/delimitMate.git
   setup_vim_plugin https://github.com/bronson/vim-visual-star-search.git
-  setup_vim_plugin https://github.com/ctrlpvim/ctrlp.vim.git
   setup_vim_plugin https://github.com/fatih/vim-go.git
+  setup_vim_plugin https://github.com/junegunn/fzf.git
   setup_vim_plugin https://github.com/skywind3000/asyncrun.vim.git
   setup_vim_plugin https://github.com/tpope/vim-commentary.git
   setup_vim_plugin https://github.com/tpope/vim-endwise.git
