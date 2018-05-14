@@ -1,4 +1,21 @@
-"###### 1) Common Settings #####################################################
+"###### 1) Plugins #############################################################
+call plug#begin('~/.vim/plugged')
+
+Plug 'Raimondi/delimitMate'
+Plug 'bronson/vim-visual-star-search'
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'junegunn/fzf'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-vinegar'
+Plug 'vim-airline/vim-airline'
+Plug 'yangmillstheory/vim-snipe'
+
+call plug#end()
+
+"###### 2) Common Settings #####################################################
 set directory=~/.vim/tmp//,~/tmp//,/tmp//
 filetype on
 filetype plugin on
@@ -16,13 +33,13 @@ set hidden
 "###############################################################################
 
 
-"###### 2) Color Scheme ########################################################
+"###### 3) Color Scheme ########################################################
 syntax on
 colorscheme koehler
 "###############################################################################
 
 
-"###### 3) Configuration/Variables/Commands ####################################
+"###### 4) Configuration/Variables/Commands ####################################
 " FZF config
 let $FZF_DEFAULT_COMMAND = $HOME."/.vim/fzfcmd"
 if has('nvim')
@@ -63,17 +80,16 @@ let g:go_highlight_extra_types = 1
 let g:go_highlight_generate_tags = 1
 " help command for full window
 command! -nargs=+ Help execute 'silent help <args>' | only
+" set asyncrun status
+let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 augroup vimrc
   " automatically open quickfix window if not already
   autocmd User AsyncRunStart call asyncrun#quickfix_toggle(12, 1)
-  " set asyncrun status
-  autocmd VimEnter * let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
-  autocmd VimEnter * map <leader><leader>f <Plug>(snipe-f)
 augroup END
 "###############################################################################
 
 
-"###### 4) Highlighting ########################################################
+"###### 5) Highlighting ########################################################
 set listchars=eol:$,tab:>-,trail:#
 " Turn on search highlighting (in progress and complete)
 set incsearch
@@ -87,7 +103,7 @@ match ExtraWhitespace /\s\+$/
 "###############################################################################
 
 
-"###### 5) Global Tab/Space config #############################################
+"###### 6) Global Tab/Space config #############################################
 set shiftwidth=2
 set softtabstop=2
 set expandtab
@@ -97,9 +113,9 @@ set pastetoggle=<F2>
 "###############################################################################
 
 
-"###### 6) Filetype specific configuration #####################################
+"###### 7) Filetype specific configuration #####################################
 autocmd FileType c,sh,ruby,python,java,xml autocmd BufWrite <buffer> :call DeleteTrailingWS()
-autocmd FileType python setlocal sw=4 sts=4 expandtab tw=80  fo+=t
+autocmd FileType python setlocal sw=4 sts=4 expandtab tw=80  fo+=t nosmartindent
 autocmd FileType sh     setlocal sw=2 sts=2 expandtab tw=80  fo+=t
 autocmd FileType ruby   setlocal sw=2 sts=2 expandtab tw=80  fo+=t
 autocmd FileType go     setlocal noexpandtab tabstop=4 shiftwidth=4
@@ -108,7 +124,7 @@ autocmd FileType xml    setlocal sw=2 sts=2 expandtab tw=120 fo+=t
 "###############################################################################
 
 
-"###### 7) Key (re)mappings ####################################################
+"###### 8) Key (re)mappings ####################################################
 " Change leader to space key
 let mapleader = "\<Space>"
 " <Esc> to jj to keep fingers on home keys
@@ -148,9 +164,11 @@ nnoremap <C-p> :FZF<CR>
 nnoremap gr :Grep <cword> .<CR>
 " Java getter/setter generation
 map ggs ^mawv/ <CR>"ty/ <CR>wvwh"ny/setters<CR>$a<CR><ESC>xxa<CR>public void <Esc>"npbiset<Esc>l~ea(<Esc>"tpa<Esc>"npa) {<CR><Tab>this.<Esc>"npa = <Esc>"npa;<CR>}<Esc>=<CR><ESC>/getters<CR>$a<CR><ESC>xxa<CR>public <Esc>"tpa<Esc>"npbiget<Esc>l~ea() {<CR><Tab>return <Esc>"npa;<CR>}<Esc>=<CR><Esc>`ak
+" vim-snipe mapping
+map <leader><leader>f <Plug>(snipe-f)
 
 
-"###### 8) Cross hairs #########################################################
+"###### 9) Cross hairs #########################################################
 set cursorline
 set cursorcolumn
 hi CursorColumn ctermbg=243
@@ -158,7 +176,7 @@ hi CursorLine   ctermbg=243 cterm=NONE ctermfg=15
 "###############################################################################
 
 
-"###### 9) Functions ##########################################################
+"###### 10) Functions ##########################################################
 func! DeleteTrailingWS()
   exe "normal mz"
   %s/\s\+$//ge
@@ -179,7 +197,7 @@ endfunc
 "###############################################################################
 
 
-"###### 10) Macros #############################################################
+"###### 11) Macros #############################################################
 " Swap current line with one above
 let @a = 'ddp'
 let @b = 'mz:%s/mipselled/mispelled/g`z'
@@ -187,7 +205,7 @@ let @b = 'mz:%s/mipselled/mispelled/g`z'
 let @s = 'ciw  P'
 "###############################################################################
 
-"###### 11) Custom Commands ####################################################
+"###### 12) Custom Commands ####################################################
 " grep config
 command! -nargs=+ Grep execute 'silent AsyncRun grep -nRS --exclude-dir={target,build,.git,.svn} <args>'
 " maven build

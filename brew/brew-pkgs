@@ -18,6 +18,7 @@ gnu-sed
 gnupg
 gnutls
 go
+htop
 imagemagick
 jemalloc
 jpeg
@@ -40,8 +41,10 @@ libyaml
 luajit
 maven
 msgpack
+mtr
 neovim
 nettle
+nnn
 npth
 oniguruma
 openssl

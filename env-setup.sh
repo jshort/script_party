@@ -79,20 +79,6 @@ setup_powerline_fonts() {
   trap "cleanup_dir ${tmp_dir}" EXIT
 }
 
-setup_vim_plugin() {
-  plugin_git_url=$1
-  plugin_name="$(basename $plugin_git_url .git)"
-  if [ ! -d "$plugin_name" ]; then
-    indent "Setting up plugin: $plugin_name" 4
-    indent "$(git clone $plugin_git_url 2>&1)" 8
-  else
-    indent "Plugin $plugin_name already exists, updating..." 4
-    pushd $plugin_name > /dev/null
-    indent "$(git pull)" 8
-    popd > /dev/null
-  fi
-}
-
 symlink_dirs() {
   dir_prefix=$1
   target_dir=$2
@@ -118,29 +104,26 @@ symlink_dirs() {
 
 main() {
   ##### Setup VIM ####
-  mkdir -p ${HOME}/.vim/tmp
-  mkdir -p ${HOME}/.vim/pack/dist/start
+  mkdir -p "${HOME}/.vim/tmp"
+
+  # Vim Plug Setup
+  mkdir -p "${HOME}/.vim/plugged"
+  mkdir -p "${HOME}/.vim/autoload"
+  mkdir -p "${HOME}/.local/share/nvim/site"
+  if [ ! -L "${HOME}/.local/share/nvim/plugged" ]; then
+    ln -s "${HOME}/.vim/plugged" "${HOME}/.local/share/nvim/plugged"
+  fi
+  if [ ! -L "${HOME}/.local/share/nvim/site/autoload" ]; then
+    ln -s "${HOME}/.vim/autoload" "${HOME}/.local/share/nvim/site/autoload"
+  fi
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
   # Powerline fonts
   if [ "$1" != "--no-fonts" ]; then
     indent "Setting up Powerline fonts:" 0
     setup_powerline_fonts
   fi
-
-  # Plugins
-  indent "Setting up VIM plugins:" 0
-  cd ${HOME}/.vim/pack/dist/start
-  setup_vim_plugin https://github.com/Raimondi/delimitMate.git
-  setup_vim_plugin https://github.com/bronson/vim-visual-star-search.git
-  setup_vim_plugin https://github.com/fatih/vim-go.git
-  setup_vim_plugin https://github.com/junegunn/fzf.git
-  setup_vim_plugin https://github.com/skywind3000/asyncrun.vim.git
-  setup_vim_plugin https://github.com/tpope/vim-commentary.git
-  setup_vim_plugin https://github.com/tpope/vim-endwise.git
-  setup_vim_plugin https://github.com/tpope/vim-surround.git
-  setup_vim_plugin https://github.com/tpope/vim-vinegar.git
-  setup_vim_plugin https://github.com/vim-airline/vim-airline.git
-  setup_vim_plugin https://github.com/yangmillstheory/vim-snipe.git
 
   cd ${DIR}
 
