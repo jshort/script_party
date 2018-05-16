@@ -150,7 +150,6 @@ if [ -d "${HOME}/.shellrc.d" ] && [ -n "$(ls -A "${HOME}/.shellrc.d/")" ]; then
   done
 fi
 
-
 echo "Shell initialization complete."
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
