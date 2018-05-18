@@ -1,0 +1,21 @@
+###### PATH Manipulation ######################################################
+
+conditional_export() {
+  local pathadd="$1"
+  local back="$2"
+  if [ -d ${pathadd} ] && [[ ":${PATH}:" != *":${pathadd}:"* ]]; then
+    if [ -z "${back}" ]; then
+      PATH="${pathadd}${PATH:+":${PATH}"}"
+    else
+      PATH="${PATH:+"${PATH}:"}${pathadd}"
+    fi
+  fi
+}
+
+# Add my local bin
+conditional_export "${HOME}/bin"
+
+##### Homebrew Setup/Configuration ############################################
+
+conditional_export '/usr/local/bin'
+conditional_export '/usr/local/sbin' 'true'

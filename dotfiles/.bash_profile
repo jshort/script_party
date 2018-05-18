@@ -111,15 +111,6 @@ alias ginst='go install'
 
 alias curlkv='curl -k -v'
 
-###### PATH Manipulation ######################################################
-
-export PATH=/usr/local/bin:$PATH
-export PATH="${HOME}/bin:$PATH"
-
-##### Homebrew Setup/Configuration ############################################
-
-export PATH=$PATH:/usr/local/sbin
-
 ##### Shell Functions #########################################################
 
 psproc() {

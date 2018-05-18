@@ -13,7 +13,8 @@ Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
 Plug 'yangmillstheory/vim-snipe'
 
-Plug 'artur-shaik/vim-javacomplete2'
+Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 endif
@@ -76,6 +77,8 @@ augroup END
 
 "###### 5) Plugin Configuration/Variables/Commands #############################
 " deoplete config
+let g:python_host_prog = $HOME.'/.pyenv/versions/nvim2/bin/python'
+let g:python3_host_prog = $HOME.'/.pyenv/versions/nvim3/bin/python'
 if has('nvim')
   let g:deoplete#enable_at_startup = 1
   call deoplete#custom#option('omni_patterns', {'java':['[^. *\t]\.\w*','@\w\+']})

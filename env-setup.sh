@@ -5,6 +5,21 @@
 # Powerline/iTerm2 setup: https://coderwall.com/p/yiot4q/setup-vim-powerline-and-iterm2-on-mac-os-x
 # Fonts: git clone https://github.com/powerline/fonts.git && cd fonts && ./install.sh
 # Set iTerm2 font (non-ASCII too) to be: Inconsolata for powerline 14pt
+# pyenv setup:
+#      curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+#      pyenv install 2.7.15
+#      pyenv install 3.6.5
+#
+#      pyenv virtualenv 2.7.15 nvim2
+#      pyenv virtualenv 3.6.5 nvim3
+#
+#      pyenv activate nvim2
+#      pip install neovim
+#      pyenv which python  # Note the path
+#
+#      pyenv activate nvim3
+#      pip install neovim
+#      pyenv which python  # Note the path
 
 DIR=$(cd $(/usr/bin/dirname $0) 2>/dev/null && pwd)
 
@@ -14,7 +29,9 @@ DOTFILES=(
   .config/nvim/init.vim
   .gitconfig
   .gitignore
+  .shellrc.d/01-path-config
   .shellrc.d/oh-my-zsh
+  .shellrc.d/pyenv
   .shellrc.d/rbenv
   .shellrc.d/speedtest-cli
   .shellrc.d/ssh-agent-config

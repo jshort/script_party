@@ -26,7 +26,7 @@ else
     printf "Error: git clone of oh-my-zsh repo failed\n"
     exit 1
   }
-  echo "oh my zsh is installed."
+  echo 'oh my zsh is installed.'
 fi
 
 # Plugins/themes
