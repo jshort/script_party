@@ -21,7 +21,8 @@ while getopts "$optspec" optchar; do
         *)
           get_help
           ;;
-      esac;;
+      esac
+      ;;
     h)
       get_help
       ;;

@@ -33,10 +33,6 @@ POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='236'
 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='196'
 POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='236'
 
-# ZSH_THEME="ys"
-# ZSH_THEME="agnoster"
-# ZSH_THEME="robbyrussell"
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -131,3 +127,15 @@ unsetopt HIST_VERIFY
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 # accept and execute autosuggestion with <ctrl> + <space>
 bindkey '^ ' autosuggest-execute
+
+read -r -d '' TIMEFMT << EOM
+%J   %U  user %S system %P cpu %*E total
+avg shared (code):         %X KB
+avg unshared (data/stack): %D KB
+total (sum):               %K KB
+max memory:                %M KB
+page faults from disk:     %F
+other page faults:         %R
+EOM
+
+export TIMEFMT

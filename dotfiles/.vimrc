@@ -41,9 +41,7 @@ set hidden
 
 "###### 3) Color Scheme ########################################################
 syntax on
-colorscheme koehler
-highlight Pmenu    ctermfg=9   ctermbg=16  gui=bold
-highlight PmenuSel ctermfg=16  ctermbg=14  gui=bold
+colorscheme slate
 "###############################################################################
 
 
@@ -70,7 +68,7 @@ command! -nargs=+ Help execute 'silent help <args>' | only
 let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 augroup vimrc
   " automatically open quickfix window if not already
-  autocmd User AsyncRunStart call asyncrun#quickfix_toggle(12, 1)
+  autocmd User AsyncRunStart call asyncrun#quickfix_toggle(&lines / 3, 1)
 augroup END
 "###############################################################################
 
@@ -94,8 +92,6 @@ if has('nvim')
   autocmd  FileType fzf set laststatus=0 noshowmode noruler
     \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 endif
-" vim-snipe highlighting
-let g:snipe_highlight_cterm256_color = 'cyan'
 " go-vim settings
 if has("nvim")
   au FileType go nmap <leader>r <Plug>(go-run-tab)
@@ -118,11 +114,22 @@ set listchars=eol:$,tab:>-,trail:#
 set incsearch
 set hlsearch
 " Search and line number highlighting colors
-highlight Search ctermbg=57
-highlight LineNr ctermfg=46
+highlight Search    ctermfg=14 ctermbg=57
+highlight IncSearch ctermfg=0  ctermbg=10
+highlight LineNr    ctermfg=46
 " Highlight trailing whitespace in red
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
+" Cross hairs
+set cursorline
+set cursorcolumn
+hi CursorColumn ctermbg=243
+hi CursorLine   ctermbg=243 cterm=NONE ctermfg=15
+" Autocomplete pop-up colors
+highlight Pmenu    ctermfg=9   ctermbg=16  gui=bold
+highlight PmenuSel ctermfg=16  ctermbg=14  gui=bold
+" vim-snipe highlighting
+let g:snipe_highlight_cterm256_color = 'cyan'
 "###############################################################################
 
 
@@ -145,6 +152,7 @@ autocmd FileType go     setlocal noexpandtab tabstop=4 shiftwidth=4
 autocmd FileType java   setlocal sw=4 sts=4 expandtab tw=120 fo+=t
 autocmd FileType java   setlocal omnifunc=javacomplete#Complete
 autocmd FileType xml    setlocal sw=2 sts=2 expandtab tw=120 fo+=t
+let java_highlight_all = 1
 "###############################################################################
 
 
@@ -194,15 +202,7 @@ map <leader><leader>f <Plug>(snipe-f)
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 
-"###### 10) Cross hairs #########################################################
-set cursorline
-set cursorcolumn
-hi CursorColumn ctermbg=243
-hi CursorLine   ctermbg=243 cterm=NONE ctermfg=15
-"###############################################################################
-
-
-"###### 11) Functions ##########################################################
+"###### 10) Functions ##########################################################
 func! DeleteTrailingWS()
   exe "normal mz"
   %s/\s\+$//ge
@@ -223,7 +223,7 @@ endfunc
 "###############################################################################
 
 
-"###### 12) Macros #############################################################
+"###### 11) Macros #############################################################
 " Swap current line with one above
 let @a = 'ddp'
 let @b = 'mz:%s/mipselled/mispelled/g`z'
@@ -231,7 +231,7 @@ let @b = 'mz:%s/mipselled/mispelled/g`z'
 let @s = 'ciw  P'
 "###############################################################################
 
-"###### 13) Custom Commands ####################################################
+"###### 12) Custom Commands ####################################################
 " grep config
 command! -nargs=+ Grep execute 'silent AsyncRun grep -nRS --exclude-dir={target,build,.git,.svn} <args>'
 " maven build
