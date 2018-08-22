@@ -9,6 +9,7 @@ if [[ ${SHELL_PROG} = '-bash' || ${SHELL_PROG} == *'bash'* ]]; then
   source ${HOME}/.shellrc_bash
 elif [[ ${SHELL_PROG} = '-zsh' || ${SHELL_PROG} == *'zsh'* ]]; then
   source ${HOME}/.shellrc_zsh
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 else
   echo "Unknown shell rc file!"
   exit 1
@@ -142,5 +143,3 @@ if [ -d "${HOME}/.shellrc.d" ] && [ -n "$(ls -A "${HOME}/.shellrc.d/")" ]; then
 fi
 
 echo "Shell initialization complete."
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

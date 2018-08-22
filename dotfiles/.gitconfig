@@ -2,9 +2,21 @@
         email = james.short@alumni.duke.edu
         name = James Short
 [color]
-        ui = auto
+        ui = true
+[color "diff"]
+        whitespace = red reverse
+        meta = yellow
+        frag = magenta bold
+        commit = yellow bold
+        old = red bold
+        new = green bold
+[color "diff-highlight"]
+        oldNormal = red bold
+        oldHighlight = red bold 52
+        newNormal = green bold
+        newHighlight = green bold 22
 [core]
-        pager = less -FMRiX
+        pager = diff-so-fancy | less --tabs=4 -RFX
         autocrlf = input
         excludesfile = ~/.gitignore
         editor = vim

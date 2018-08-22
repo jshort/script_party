@@ -6,6 +6,7 @@ bison
 cmake
 coreutils
 curl
+diff-so-fancy
 flex
 freetype
 fzf
