@@ -60,6 +60,7 @@ rbenv
 readline
 ruby
 ruby-build
+shellcheck
 sqlite
 the_silver_searcher
 tree

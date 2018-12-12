@@ -5,6 +5,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'bronson/vim-visual-star-search'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'junegunn/fzf'
+Plug 'neomake/neomake'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
@@ -183,6 +184,8 @@ nmap <leader>c <C-c><C-c>
 nmap <leader>o :copen <CR>
 " Close quickfix (think 'done')
 nmap <leader>d :ccl <CR>
+" Paste from 0 register (last yank)
+map <leader>p "0p <CR>
 " write file as sudo if you forgot to start vim with sudo
 cmap w!! write !sudo tee > /dev/null %
 " Mapping to automatically expand to the path of the current buffer

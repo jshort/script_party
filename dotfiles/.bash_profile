@@ -59,6 +59,14 @@ alias mh='mvn help:describe -Ddetail' # then pass -Dcmd= or -Dplugin=<group>:<ar
 alias mrun='mvn jetty:run'
 alias checkstyle='mvn checkstyle:checkstyle'
 
+# docker
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias di='docker images'
+alias dip='docker image prune'
+alias drm='docker rm'
+alias drmi='docker rmi'
+
 # generic
 alias ..='cd ..'
 alias ll='ls -la'
