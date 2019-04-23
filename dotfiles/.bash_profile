@@ -67,6 +67,16 @@ alias dip='docker image prune'
 alias drm='docker rm'
 alias drmi='docker rmi'
 
+dsrm() {
+  if [ -z "${1}" ]; then
+    echo "Please supply docker container id or name." >&2
+    return 1
+  fi
+  for i in "${@}"; do
+    docker stop "${i}" && docker rm "${i}"
+  done
+}
+
 # generic
 alias ..='cd ..'
 alias ll='ls -la'

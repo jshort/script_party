@@ -71,6 +71,8 @@ augroup vimrc
   " automatically open quickfix window if not already
   autocmd User AsyncRunStart call asyncrun#quickfix_toggle(&lines / 3, 1)
 augroup END
+" Disable 'scratch window'
+set completeopt-=preview
 "###############################################################################
 
 
