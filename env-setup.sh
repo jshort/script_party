@@ -8,7 +8,7 @@
 # pyenv setup:
 #      curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 #      pyenv install 2.7.15
-#      pyenv install 3.6.5
+#      PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install 3.6.5
 #
 #      pyenv virtualenv 2.7.15 nvim2
 #      pyenv virtualenv 3.6.5 nvim3
@@ -20,6 +20,10 @@
 #      pyenv activate nvim3
 #      pip install neovim
 #      pyenv which python  # Note the path
+#
+# YCM:
+#      cd to YCM dir:
+#      ./install.py --clang-completer --go-completer --java-completer
 
 DIR=$(cd $(/usr/bin/dirname $0) 2>/dev/null && pwd)
 

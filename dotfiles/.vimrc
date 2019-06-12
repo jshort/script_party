@@ -14,7 +14,8 @@ Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
 Plug 'yangmillstheory/vim-snipe'
 
-Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
+Plug 'Valloric/YouCompleteMe'
+
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -84,10 +85,6 @@ if has('nvim')
   let g:deoplete#enable_at_startup = 1
   call deoplete#custom#option('omni_patterns', {'java':['[^. *\t]\.\w*','@\w\+']})
 endif
-" vim-javacomplete2 config
-let g:JavaComplete_ImportSortType = 'packageName'
-let g:JavaComplete_ImportOrder = ['java.', 'javax.', 'org.', 'com.', 'net.']
-" let g:JavaComplete_InsertImports = 0
 " FZF config
 let $FZF_DEFAULT_COMMAND = $HOME."/.vim/fzfcmd"
 if has('nvim')
@@ -153,7 +150,6 @@ autocmd FileType sh     setlocal sw=2 sts=2 expandtab tw=80  fo+=t
 autocmd FileType ruby   setlocal sw=2 sts=2 expandtab tw=80  fo+=t
 autocmd FileType go     setlocal noexpandtab tabstop=4 shiftwidth=4
 autocmd FileType java   setlocal sw=4 sts=4 expandtab tw=120 fo+=t
-autocmd FileType java   setlocal omnifunc=javacomplete#Complete
 autocmd FileType xml    setlocal sw=2 sts=2 expandtab tw=120 fo+=t
 let java_highlight_all = 1
 "###############################################################################

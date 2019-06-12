@@ -3,21 +3,20 @@ require 'pp'
 
 pkg_hash = {}
 `brew list`.split.each do |pkg|
-  pkg_hash[pkg] = {deps: [], child_count: 0}
+  pkg_hash[pkg] = {deps: [], parent_count: 0}
 end
 
 pp pkg_hash if $DEBUG
 
 pkg_hash.each_key do |key|
   `brew deps #{key}`.each_line do |dep|
-    pkg_hash[dep.strip][:child_count] += 1
-    pkg_hash[key][:deps] << dep.strip
+    pkg_hash[dep.strip][:parent_count] += 1
+    pkg_hash[dep.strip][:deps] << key
   end
 end
 
-
 pkg_hash.each do |k,v|
-  if v[:child_count] == 0
-    puts "Brew package: #{k} can be removed along with dependencies: #{v[:deps]}"
+  if v[:parent_count] != 0
+    puts "Brew package: #{k} cannot be removed due to dependencies: #{v[:deps]}"
   end
 end

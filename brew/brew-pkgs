@@ -1,4 +1,5 @@
 adns
+ansible
 argp-standalone
 autoconf
 automake
@@ -6,6 +7,7 @@ bison
 cmake
 coreutils
 curl
+dep
 diff-so-fancy
 flex
 freetype
@@ -56,12 +58,14 @@ perl
 pinentry
 pkg-config
 python
+python@2
 rbenv
 readline
 ruby
 ruby-build
 shellcheck
 sqlite
+terraform
 the_silver_searcher
 tree
 unibilium
