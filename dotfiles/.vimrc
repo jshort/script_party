@@ -105,6 +105,9 @@ let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_generate_tags = 1
+" YCM Config
+" Remove <S-Tab> from YCM config so delimitMate config takes precedence
+let g:ycm_key_list_previous_completion = ['<Up>']
 "###############################################################################
 
 
@@ -148,9 +151,11 @@ autocmd FileType * autocmd BufWrite <buffer> :call DeleteTrailingWS()
 autocmd FileType python setlocal sw=4 sts=4 expandtab tw=80  fo+=t nosmartindent
 autocmd FileType sh     setlocal sw=2 sts=2 expandtab tw=80  fo+=t
 autocmd FileType ruby   setlocal sw=2 sts=2 expandtab tw=80  fo+=t
+autocmd FileType xml    setlocal sw=2 sts=2 expandtab tw=120 fo+=t
+autocmd FileType cpp    setlocal sw=2 sts=2 expandtab tw=120 fo+=t commentstring=//\ %s
+autocmd FileType c      setlocal sw=2 sts=2 expandtab tw=120 fo+=t commentstring=//\ %s
 autocmd FileType go     setlocal noexpandtab tabstop=4 shiftwidth=4
 autocmd FileType java   setlocal sw=4 sts=4 expandtab tw=120 fo+=t
-autocmd FileType xml    setlocal sw=2 sts=2 expandtab tw=120 fo+=t
 let java_highlight_all = 1
 "###############################################################################
 
@@ -201,6 +206,7 @@ map ggs ^mawv/ <CR>"ty/ <CR>wvwh"ny/setters<CR>$a<CR><ESC>xxa<CR>public void <Es
 map <leader><leader>f <Plug>(snipe-f)
 " deoplete tab-complete
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+"###############################################################################
 
 
 "###### 10) Functions ##########################################################

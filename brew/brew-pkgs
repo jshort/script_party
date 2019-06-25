@@ -4,6 +4,7 @@ argp-standalone
 autoconf
 automake
 bison
+catch2
 cmake
 coreutils
 curl
@@ -64,6 +65,7 @@ readline
 ruby
 ruby-build
 shellcheck
+spdlog
 sqlite
 terraform
 the_silver_searcher
