@@ -1,3 +1,7 @@
-conditional_path_add "${HOME}/.pyenv/bin"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+#!/bin/sh
+
+if which brew &> /dev/null && which pyenv &> /dev/null; then
+  conditional_path_add "${HOME}/.pyenv/bin"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi

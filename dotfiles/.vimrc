@@ -14,7 +14,7 @@ Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
 Plug 'yangmillstheory/vim-snipe'
 
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp'] }
 
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 if has('nvim')
@@ -79,8 +79,8 @@ set completeopt-=preview
 
 "###### 5) Plugin Configuration/Variables/Commands #############################
 " deoplete config
-let g:python_host_prog = $HOME.'/.pyenv/versions/nvim2/bin/python'
-let g:python3_host_prog = $HOME.'/.pyenv/versions/nvim3/bin/python'
+let g:python_host_prog  = $VIM_PYTHON2
+let g:python3_host_prog = $VIM_PYTHON3
 if has('nvim')
   let g:deoplete#enable_at_startup = 1
   call deoplete#custom#option('omni_patterns', {'java':['[^. *\t]\.\w*','@\w\+']})

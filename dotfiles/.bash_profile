@@ -6,12 +6,15 @@
 
 SHELL_PROG=${0##*/}
 if [[ ${SHELL_PROG} = '-bash' || ${SHELL_PROG} == *'bash'* ]]; then
-  source ${HOME}/.shellrc_bash
+  source ${HOME}/.shellrc-bash
+  [ -f ${HOME}/.shellrc-bash-extra ] && source ${HOME}/.shellrc-bash-extra
+  [ -f ${HOME}/.fzf.bash ] && source ${HOME}/.fzf.bash
 elif [[ ${SHELL_PROG} = '-zsh' || ${SHELL_PROG} == *'zsh'* ]]; then
-  source ${HOME}/.shellrc_zsh
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  source ${HOME}/.shellrc-zsh
+  [ -f ${HOME}/.shellrc-zsh-extra ] && source ${HOME}/.shellrc-zsh-extra
+  [ -f ${HOME}/.fzf.zsh ] && source ${HOME}/.fzf.zsh
 else
-  echo "Unknown shell rc file!"
+  echo 'Unknown shell rc file!'
   exit 1
 fi
 
@@ -22,7 +25,6 @@ export LS_COLORS='rs=0:di=01;36:ln=01;35:mh=00:pi=40;33:so=01;32:do=01;35:bd=40;
 
 if [[ $(uname) == 'Darwin' ]]; then
   # MacOS
-  hostname=$(scutil --get ComputerName)
   alias ls='ls -GpF'
   [ -e /usr/local/bin/gls ] && alias ls='gls --color -F'
   alias ps='ps -ej'
@@ -39,7 +41,6 @@ if [[ $(uname) == 'Darwin' ]]; then
   alias viewimage='open -a Preview'
 else
   # Linux
-  hostname=$(hostname)
   alias ls='ls -pF --color=auto'
   alias ps='ps -ef'
 fi
@@ -161,3 +162,5 @@ if [ -d "${HOME}/.shellrc.d" ] && [ -n "$(ls -A "${HOME}/.shellrc.d/")" ]; then
 fi
 
 echo "Shell initialization complete."
+
+#CHEF.NO.SOURCE

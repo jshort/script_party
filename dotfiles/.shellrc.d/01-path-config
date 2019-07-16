@@ -1,16 +1,35 @@
-###### PATH Manipulation ######################################################
+#!/bin/sh
+
+###### Functions  #############################################################
+
+indent() {
+  local string="$1"
+  local num_spaces="$2"
+
+  while read -r line; do
+    printf "%${num_spaces}s%s\n" '' "$line"
+  done <<< "$string"
+}
 
 conditional_path_add() {
   local pathadd="$1"
   local back="$2"
-  if [ -d ${pathadd} ] && [[ ":${PATH}:" != *":${pathadd}:"* ]]; then
-    if [ -z "${back}" ]; then
-      PATH="${pathadd}${PATH:+":${PATH}"}"
+  if [ -d ${pathadd} ]; then
+    if [[ ":${PATH}:" != *":${pathadd}:"* ]]; then
+      if [ -z "${back}" ]; then
+        PATH="${pathadd}${PATH:+":${PATH}"}"
+      else
+        PATH="${PATH:+"${PATH}:"}${pathadd}"
+      fi
     else
-      PATH="${PATH:+"${PATH}:"}${pathadd}"
+      indent "Directory ${pathadd} is already on PATH." 4
     fi
+  else
+    indent "Directory ${pathadd} does not exist." 4
   fi
 }
+
+###### PATH Manipulation ######################################################
 
 # Add my local bin
 conditional_path_add "${HOME}/bin"

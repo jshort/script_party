@@ -44,6 +44,7 @@ libvterm
 libyaml
 luajit
 maven
+mosh
 msgpack
 mtr
 neovim
@@ -58,6 +59,8 @@ pcre
 perl
 pinentry
 pkg-config
+pyenv
+pyenv-virtualenv
 python
 python@2
 rbenv

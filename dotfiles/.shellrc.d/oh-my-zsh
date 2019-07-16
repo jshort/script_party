@@ -9,7 +9,7 @@ setup_update_plugin() {
   if [ ! -d "${plug_dir}" ]; then
     git clone "${url}" "${plug_dir}"
   else
-    echo "    Updating plugin/theme: ${dir##*/}"
+    indent "Updating plugin/theme: ${dir##*/}" 4
     pushd "${plug_dir}" > /dev/null
     git pull &> /dev/null
     popd > /dev/null
@@ -17,7 +17,7 @@ setup_update_plugin() {
 }
 
 if [ -d "${OM_ZSH_HOME}" ]; then
-  echo "    Updating Oh My Zsh."
+  indent "Updating Oh My Zsh." 4
   pushd "${OM_ZSH_HOME}" > /dev/null
   /bin/sh tools/upgrade.sh &> /dev/null
   popd > /dev/null

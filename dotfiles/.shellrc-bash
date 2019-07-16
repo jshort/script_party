@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 ##### Bash Specific Logic #####################################################
 
@@ -54,11 +54,17 @@ REV_RED="\[$ESC[${DULL};${FG_YELLOW}; ${BG_RED}m\]"
 
 ##### PS1 Prompt Configuration ################################################
 
+if [[ $(uname) == 'Darwin' ]]; then
+  PS1_HOSTNAME=$(scutil --get ComputerName)
+else
+  PS1_HOSTNAME=$(hostname)
+fi
+
 parse_git_branch() {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/'
 }
 
-export PS1="$BRIGHT_RED(\A) $CYAN\u$NORMAL@$YELLOW${hostname} $GREEN\W$BLUE\$(parse_git_branch)$NORMAL > "
+export PS1="$BRIGHT_RED(\A) $CYAN\u$NORMAL@$YELLOW${PS1_HOSTNAME} $GREEN\W$BLUE\$(parse_git_branch)$NORMAL > "
 
 ##### Autocompletion Configuration ############################################
 

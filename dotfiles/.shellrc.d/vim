@@ -1,19 +1,22 @@
-#!bash
+#!/bin/sh
 
 ##### Vim Setup ###############################################################
+
+# Env var that is used by numerous tools
+export EDITOR=vim
 
 alias svi='sudo vim'
 alias vimex="vim +':Ex'"
 alias edit='vim'
 
-if which nvim > /dev/null; then
-  alias vim='nvim'
+if which vim &> /dev/null; then
+  if [ ! -L "${HOME}/bin/vi" ]; then
+    ln -s "$(which vim)" "${HOME}/bin/vi"
+  fi
 fi
 
-if which vim > /dev/null; then
-  if [ ! -L '/usr/local/bin/vi' ]; then
-    ln -s "$(which vim)" /usr/local/bin/vi
-  fi
+if which nvim &> /dev/null; then
+  alias vim='nvim'
 fi
 
 vimdir() {
@@ -23,10 +26,19 @@ vimdir() {
     return 1
   fi
 
-  local dir="$1"
-  if [ ! -d "$dir" ]; then
+  local dir="${1}"
+  if [ ! -d "${dir}" ]; then
     echo "${ERR_MSG}"
     return 1
   fi
-  vim +':Ex' +':bd 1' "$dir"
+  vim +':Ex' +':bd 1' "${dir}"
 }
+
+# Python setup for deoplete
+if [ -z "${VIM_PYTHON2}" ]; then
+  export VIM_PYTHON2="${HOME}/.pyenv/versions/nvim2/bin/python"
+fi
+
+if [ -z "${VIM_PYTHON3}" ]; then
+  export VIM_PYTHON3="${HOME}/.pyenv/versions/nvim3/bin/python"
+fi
