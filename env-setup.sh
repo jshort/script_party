@@ -17,10 +17,12 @@
 #
 #   pyenv activate nvim2
 #   pip install neovim
+#   pip install pynvim
 #   pyenv which python  # Note the path
 #
 #   pyenv activate nvim3
 #   pip install neovim
+#   pip install pynvim
 #   pyenv which python  # Note the path
 #
 # YCM:
@@ -37,7 +39,7 @@ DOTFILES=(
   .config/nvim/init.vim
   .gitconfig
   .gitignore
-  .shellrc.d/01-path-config
+  .shellrc.d/01-setup
   .shellrc.d/diff-so-fancy
   .shellrc.d/oh-my-zsh
   .shellrc.d/pyenv
@@ -45,6 +47,8 @@ DOTFILES=(
   .shellrc.d/speedtest-cli
   .shellrc.d/ssh-agent-config
   .shellrc.d/vim
+  .shellrc.d/zzz-setup
+  .shellrc.d/diff-so-fancy
   .shellrc-bash
   .shellrc-zsh
   .vim/fzfcmd
@@ -106,26 +110,34 @@ setup_powerline_fonts() {
   trap "cleanup_dir ${tmp_dir}" EXIT
 }
 
+symlink_dir() {
+  local dir_prefix=$1
+  local target_dir=$2
+  local file=$3
+
+  target="$target_dir/$file"
+  if [ ! -d "$(/usr/bin/dirname $target)" ]; then
+    indent "Base dir for $target does not exist, creating it..." 4
+    mkdir -p $(/usr/bin/dirname $target)
+  fi
+
+  if [ -L "$target" ]; then
+    indent "$target is already symlinked." 4
+  elif [ -e "$target" ]; then
+    indent "$target is already a file." 4
+  else
+    indent "Symlinking $target." 4
+    ln -s "$dir_prefix/$file" "$target"
+  fi
+}
+
 symlink_dirs() {
-  dir_prefix=$1
-  target_dir=$2
-  file_arr=("${!3}")
+  local dir_prefix=$1
+  local target_dir=$2
+  local file_arr=("${!3}")
 
   for i in "${file_arr[@]}"; do
-    target="$target_dir/$i"
-    if [ ! -d "$(/usr/bin/dirname $target)" ]; then
-      indent "Base dir for $target does not exist, creating it..." 4
-      mkdir -p $(/usr/bin/dirname $target)
-    fi
-
-    if [ -L "$target" ]; then
-      indent "$target is already symlinked." 4
-    elif [ -e "$target" ]; then
-      indent "$target is already a file." 4
-    else
-      indent "Symlinking $target." 4
-      ln -s "$dir_prefix/$i" "$target"
-    fi
+    symlink_dir "${dir_prefix}" "${target_dir}" ${i}
   done
 }
 

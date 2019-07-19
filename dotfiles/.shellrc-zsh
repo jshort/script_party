@@ -77,7 +77,7 @@ POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='236'
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git ruby rust rbenv rake jsontools zsh-syntax-highlighting zsh-autosuggestions docker)
+plugins=(git mercurial ruby rust rbenv rake jsontools zsh-syntax-highlighting zsh-autosuggestions docker)
 
 source $ZSH/oh-my-zsh.sh
 

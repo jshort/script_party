@@ -11,6 +11,19 @@ indent() {
   done <<< "$string"
 }
 
+performed_today() {
+  local today="$(date +%m%d%Y)"
+  if [ -e "/tmp/env-setup-${today}" ]; then
+    return 0
+  fi
+  return 1
+}
+
+mark_today() {
+  local today="$(date +%m%d%Y)"
+  touch "/tmp/env-setup-${today}"
+}
+
 conditional_path_add() {
   local pathadd="$1"
   local back="$2"

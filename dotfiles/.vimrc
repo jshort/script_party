@@ -16,7 +16,7 @@ Plug 'yangmillstheory/vim-snipe'
 
 Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp'] }
 
-Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+Plug 'deoplete-plugins/deoplete-jedi'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 endif
@@ -82,8 +82,8 @@ set completeopt-=preview
 let g:python_host_prog  = $VIM_PYTHON2
 let g:python3_host_prog = $VIM_PYTHON3
 if has('nvim')
-  let g:deoplete#enable_at_startup = 1
-  call deoplete#custom#option('omni_patterns', {'java':['[^. *\t]\.\w*','@\w\+']})
+  " let g:deoplete#enable_at_startup = 1
+  " call deoplete#custom#option('omni_patterns', {'java':['[^. *\t]\.\w*','@\w\+']})
 endif
 " FZF config
 let $FZF_DEFAULT_COMMAND = $HOME."/.vim/fzfcmd"
@@ -149,6 +149,7 @@ set pastetoggle=<F2>
 "###### 8) Filetype specific configuration #####################################
 autocmd FileType * autocmd BufWrite <buffer> :call DeleteTrailingWS()
 autocmd FileType python setlocal sw=4 sts=4 expandtab tw=80  fo+=t nosmartindent
+autocmd FileType python call deoplete#enable()
 autocmd FileType sh     setlocal sw=2 sts=2 expandtab tw=80  fo+=t
 autocmd FileType ruby   setlocal sw=2 sts=2 expandtab tw=80  fo+=t
 autocmd FileType xml    setlocal sw=2 sts=2 expandtab tw=120 fo+=t
@@ -156,6 +157,7 @@ autocmd FileType cpp    setlocal sw=2 sts=2 expandtab tw=120 fo+=t commentstring
 autocmd FileType c      setlocal sw=2 sts=2 expandtab tw=120 fo+=t commentstring=//\ %s
 autocmd FileType go     setlocal noexpandtab tabstop=4 shiftwidth=4
 autocmd FileType java   setlocal sw=4 sts=4 expandtab tw=120 fo+=t
+" autocmd FileType c,cpp  call deoplete#custom#buffer_option('auto_complete', v:false)
 let java_highlight_all = 1
 "###############################################################################
 
@@ -244,3 +246,9 @@ command! -nargs=+ Grep execute 'silent AsyncRun grep -nRS --exclude-dir={target,
 " maven build
 command! MCI execute 'AsyncRun mvn clean install'
 command! MC execute 'AsyncRun mvn clean'
+command! -nargs=+ BB execute 'AsyncRun buck build <args>'
+command! -nargs=+ BT execute 'AsyncRun buck test <args>'
+
+if filereadable($HOME."/.vimrc-extra")
+  source $HOME/.vimrc-extra
+endif

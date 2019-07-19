@@ -6,21 +6,25 @@ setup_update_plugin() {
   local url=${1}
   local dir=${2}
   local plug_dir="${OM_ZSH_HOME}/${dir}"
-  if [ ! -d "${plug_dir}" ]; then
-    git clone "${url}" "${plug_dir}"
-  else
-    indent "Updating plugin/theme: ${dir##*/}" 4
-    pushd "${plug_dir}" > /dev/null
-    git pull &> /dev/null
-    popd > /dev/null
+  if ! performed_today; then
+    if [ ! -d "${plug_dir}" ]; then
+      git clone "${url}" "${plug_dir}"
+    else
+      indent "Updating plugin/theme: ${dir##*/}" 4
+      pushd "${plug_dir}" > /dev/null
+      git pull &> /dev/null
+      popd > /dev/null
+    fi
   fi
 }
 
 if [ -d "${OM_ZSH_HOME}" ]; then
-  indent "Updating Oh My Zsh." 4
-  pushd "${OM_ZSH_HOME}" > /dev/null
-  /bin/sh tools/upgrade.sh &> /dev/null
-  popd > /dev/null
+  if ! performed_today; then
+    indent "Updating Oh My Zsh." 4
+    pushd "${OM_ZSH_HOME}" &> /dev/null
+    /bin/sh tools/upgrade.sh &> /dev/null
+    popd &> /dev/null
+  fi
 else
   git clone https://github.com/robbyrussell/oh-my-zsh.git ${OM_ZSH_HOME} || {
     printf "Error: git clone of oh-my-zsh repo failed\n"
