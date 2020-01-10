@@ -139,6 +139,7 @@ let g:snipe_highlight_cterm256_color = 'cyan'
 "###### 7) Global Tab/Space config #############################################
 set shiftwidth=2
 set softtabstop=2
+set textwidth=80
 set expandtab
 set autoindent
 set smartindent

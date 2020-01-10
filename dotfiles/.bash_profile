@@ -134,8 +134,8 @@ alias curlkv='curl -k -v'
 ##### Shell Functions #########################################################
 
 psproc() {
-  if [ -n "$1" ]; then
-    \ps -e -o pid,etime,command | grep "$1"
+  if [ -n "${1}" ]; then
+    \ps -e -o pid,etime,command | grep "${1}"
   else
     \ps -e -o pid,etime,command
   fi
@@ -150,6 +150,26 @@ nsecs() {
   # Below doens't work with BSD date and doesn't seem to have full granularity
   # on MacOS, even with GNU date.
   # echo $(date +%s%N)
+}
+
+# prints time since the input epoch time in seconds
+time_since() {
+  local _secs="${1}"
+  if [ -z "${_secs}" ]; then
+    echo 'Please pass a time in seconds from which to measure.'
+    return 1
+  fi
+  local _delta=$(( $(date +%s) - ${_secs} ))
+  # echo "Delta in secs: ${_delta}"
+  if (( ${_delta} < 60 )); then
+    echo "${_delta}s"
+  elif (( ${_delta}/60 < 60 )); then
+    echo "$((${_delta}/60))m$((${_delta}%60))s"
+  elif (( ${_delta}/3600 < 24 )); then
+    echo "$((${_delta}/3600))h$(((${_delta}/60)%60))m$((${_delta}%60))s"
+  elif (( ${_delta}/3600/24 < 365 )); then
+    echo "$((${_delta}/3600/24))d$(((${_delta}/3600)%24))h$(((${_delta}/60)%60))m$((${_delta}%60))s"
+  fi
 }
 
 ##### Source other files ######################################################
