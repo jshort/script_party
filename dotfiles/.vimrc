@@ -243,7 +243,8 @@ let @s = 'ciw  P'
 
 "###### 12) Custom Commands ####################################################
 " grep config
-command! -nargs=+ Grep execute 'silent AsyncRun grep -nRS --exclude-dir={target,build,.git,.svn} <args>'
+" command! -nargs=+ Grep execute 'silent AsyncRun grep -nRS --exclude-dir={target,build,.git,.svn} <args>'
+command! -nargs=+ Grep execute 'silent AsyncRun grep -nR --exclude-dir={target,build,.git,.svn} <args>'
 " maven build
 command! MCI execute 'AsyncRun mvn clean install'
 command! MC execute 'AsyncRun mvn clean'

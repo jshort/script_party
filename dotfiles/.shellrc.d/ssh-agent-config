@@ -2,10 +2,10 @@
 
 ##### ssh-agent config #########################################################
 
-if [ ! -e "${HOME}/bin/ssh-find-agent.sh" ]; then
-  curl -sLo "${HOME}/bin/ssh-find-agent.sh" \
-            "https://raw.githubusercontent.com/wwalker/ssh-find-agent/master/ssh-find-agent.sh"
-fi
-. "${HOME}/bin/ssh-find-agent.sh"
-set_ssh_agent_socket
+# if [ ! -e "${HOME}/bin/ssh-find-agent.sh" ]; then
+#   curl -sLo "${HOME}/bin/ssh-find-agent.sh" \
+#             "https://raw.githubusercontent.com/wwalker/ssh-find-agent/master/ssh-find-agent.sh"
+# fi
+# . "${HOME}/bin/ssh-find-agent.sh"
+# set_ssh_agent_socket
 

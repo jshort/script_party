@@ -169,6 +169,8 @@ time_since() {
     echo "$((${_delta}/3600))h$(((${_delta}/60)%60))m$((${_delta}%60))s"
   elif (( ${_delta}/3600/24 < 365 )); then
     echo "$((${_delta}/3600/24))d$(((${_delta}/3600)%24))h$(((${_delta}/60)%60))m$((${_delta}%60))s"
+  elif (( ${_delta}/3600/24 > 365 )); then
+    echo "$((${_delta}/3600/24/365))y$(((${_delta}/3600/24)%365))d$(((${_delta}/3600)%24))h$(((${_delta}/60)%60))m$((${_delta}%60))s"
   fi
 }
 
