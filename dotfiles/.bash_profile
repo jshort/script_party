@@ -160,17 +160,30 @@ time_since() {
     return 1
   fi
   local _delta=$(( $(date +%s) - ${_secs} ))
+  local _in_future
+  if (( ${_delta} < 0 )); then
+    _in_future=1
+    _delta=$(( 0 - ${_delta} ))
+  fi
+
   # echo "Delta in secs: ${_delta}"
+  local _out=''
   if (( ${_delta} < 60 )); then
-    echo "${_delta}s"
+    _out="${_delta}s"
   elif (( ${_delta}/60 < 60 )); then
-    echo "$((${_delta}/60))m$((${_delta}%60))s"
+    _out="$((${_delta}/60))m$((${_delta}%60))s"
   elif (( ${_delta}/3600 < 24 )); then
-    echo "$((${_delta}/3600))h$(((${_delta}/60)%60))m$((${_delta}%60))s"
+    _out="$((${_delta}/3600))h$(((${_delta}/60)%60))m$((${_delta}%60))s"
   elif (( ${_delta}/3600/24 < 365 )); then
-    echo "$((${_delta}/3600/24))d$(((${_delta}/3600)%24))h$(((${_delta}/60)%60))m$((${_delta}%60))s"
-  elif (( ${_delta}/3600/24 > 365 )); then
-    echo "$((${_delta}/3600/24/365))y$(((${_delta}/3600/24)%365))d$(((${_delta}/3600)%24))h$(((${_delta}/60)%60))m$((${_delta}%60))s"
+    _out="$((${_delta}/3600/24))d$(((${_delta}/3600)%24))h$(((${_delta}/60)%60))m$((${_delta}%60))s"
+  else
+    _out="$((${_delta}/3600/24/365))y$(((${_delta}/3600/24)%365))d$(((${_delta}/3600)%24))h$(((${_delta}/60)%60))m$((${_delta}%60))s"
+  fi
+
+  if [ -z "${_in_future}" ]; then
+    echo "${_out}"
+  else
+    echo "${_out} in future"
   fi
 }
 
