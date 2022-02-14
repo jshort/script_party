@@ -26,14 +26,14 @@ export LS_COLORS='rs=0:di=01;36:ln=01;35:mh=00:pi=40;33:so=01;32:do=01;35:bd=40;
 if [[ $(uname) == 'Darwin' ]]; then
   # MacOS
   alias ls='ls -GpF'
-  [ -e /usr/local/bin/gls ] && alias ls='gls --color -F'
+  which gls &> /dev/null && alias ls='gls --color -F'
   alias ps='ps -ej'
   alias psuptime='ps -ax -o etime,command -c'
-  if [ -e '/usr/local/bin/gsed' ]; then
-    alias sed='/usr/local/bin/gsed'
+  if which gsed &> /dev/null; then
+    alias sed='gsed'
   fi
-  if [ -e '/usr/local/bin/gdate' ]; then
-    alias date='/usr/local/bin/gdate'
+  if which gdate &> /dev/null; then
+    alias date='gdate'
   fi
   alias ldd='otool -L'
   alias md5sum='md5 -r'
@@ -146,7 +146,12 @@ msecs() {
 }
 
 nsecs() {
-  python -c 'import time; print(int(time.time()*1000*1000*1000))'
+  local _cmd='import time; print(int(time.time()*1000*1000*1000))'
+  if which python3 &> /dev/null; then
+    python3 -c ${_cmd}
+  else
+    python -c ${_cmd}
+  fi
   # Below doens't work with BSD date and doesn't seem to have full granularity
   # on MacOS, even with GNU date.
   # echo $(date +%s%N)
