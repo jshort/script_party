@@ -86,6 +86,7 @@ if has('nvim')
   " call deoplete#custom#option('omni_patterns', {'java':['[^. *\t]\.\w*','@\w\+']})
 endif
 " FZF config
+let g:fzf_layout = { 'down': '30%' }
 let $FZF_DEFAULT_COMMAND = $HOME."/.vim/fzfcmd"
 if has('nvim')
   autocmd! FileType fzf

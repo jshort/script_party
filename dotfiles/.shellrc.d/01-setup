@@ -49,5 +49,7 @@ conditional_path_add "${HOME}/bin"
 
 ##### Homebrew Setup/Configuration ############################################
 
+conditional_path_add "${HOME}/homebrew/bin"
+conditional_path_add "${HOME}/homebrew/sbin"
 conditional_path_add '/usr/local/bin'
 conditional_path_add '/usr/local/sbin' 'true'
