@@ -35,6 +35,7 @@ fi
 
 # Plugins/themes
 setup_update_plugin https://github.com/bhilburn/powerlevel9k.git custom/themes/powerlevel9k
+setup_update_plugin https://github.com/romkatv/powerlevel10k.git custom/themes/powerlevel10k
 setup_update_plugin https://github.com/zsh-users/zsh-syntax-highlighting.git custom/plugins/zsh-syntax-highlighting
 setup_update_plugin https://github.com/zsh-users/zsh-completions custom/plugins/zsh-completions
 setup_update_plugin https://github.com/zsh-users/zsh-autosuggestions custom/plugins/zsh-autosuggestions

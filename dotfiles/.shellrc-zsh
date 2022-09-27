@@ -13,7 +13,7 @@ fpath=($ZSH/custom/plugins/zsh-completions/src $fpath)
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # POWERLEVEL9K specific configuration
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status background_jobs context dir rbenv vcs)
@@ -26,6 +26,8 @@ POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%F{9}%} ❯ %{%F{default}%}"
 POWERLEVEL9K_BATTERY_CHARGING_FOREGROUND='15'
 POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND='226'
+POWERLEVEL9K_CONTEXT_TEMPLATE="%n@`[ -f ${HOME}/.hostname ] && cat ${HOME}/.hostname || hostname -f`"
+POWERLEVEL9K_VCS_BACKENDS=(git hg)
 
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND='236'
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND='119'

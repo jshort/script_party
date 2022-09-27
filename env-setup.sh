@@ -39,6 +39,9 @@ DOTFILES=(
   .config/nvim/init.vim
   .gitconfig
   .gitignore
+  .motd
+  .shellrc-bash
+  .shellrc-zsh
   .shellrc.d/01-setup
   .shellrc.d/diff-so-fancy
   .shellrc.d/oh-my-zsh
@@ -48,9 +51,6 @@ DOTFILES=(
   .shellrc.d/ssh-agent-config
   .shellrc.d/vim
   .shellrc.d/zzz-setup
-  .shellrc.d/diff-so-fancy
-  .shellrc-bash
-  .shellrc-zsh
   .vim/fzfcmd
   .vimrc
   .zshrc

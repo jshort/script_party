@@ -4,6 +4,11 @@
 
 ##### Shell Specific logic ####################################################
 
+# MOTD
+if [ -f ${HOME}/.motd ]; then
+  cat ${HOME}/.motd
+fi
+
 SHELL_PROG=${0##*/}
 if [[ ${SHELL_PROG} = '-bash' || ${SHELL_PROG} == *'bash'* ]]; then
   source ${HOME}/.shellrc-bash
