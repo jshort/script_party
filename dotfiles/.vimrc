@@ -244,11 +244,22 @@ let @s = 'ciw  P'
 
 "###### 12) Custom Commands ####################################################
 " grep config
+" MacOS grep requires -S to follow symlinks
 " command! -nargs=+ Grep execute 'silent AsyncRun grep -nRS --exclude-dir={target,build,.git,.svn} <args>'
 command! -nargs=+ Grep execute 'silent AsyncRun grep -nR --exclude-dir={target,build,.git,.svn} <args>'
+if executable('ag')
+    " Note we extract the column as well as the file and line number
+    set grepprg=ag\ --nogroup\ --nocolor\ --column
+    set grepformat=%f:%l:%c%m
+endif
+" bind K to grep word under cursor
+nnoremap <silent> K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+command! -nargs=+ Ag execute 'silent AsyncRun :grep! <args>|cwindow'
+
 " maven build
 command! MCI execute 'AsyncRun mvn clean install'
 command! MC execute 'AsyncRun mvn clean'
+" buck build
 command! -nargs=+ BB execute 'AsyncRun buck build <args>'
 command! -nargs=+ BT execute 'AsyncRun buck test <args>'
 
